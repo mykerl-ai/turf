@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "turf",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 300
+    }
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
