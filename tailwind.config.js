@@ -36,8 +36,8 @@ module.exports = {
       xs: "400px",
     },
     // fontFamily: {
-    //   display: ["Proza Libre", "sans-serif"],
-    //   body: ["Proza Libre", "sans-serif"],
+    //   display: ["Maven Pro", "sans-serif"],
+    //   body: ["Maven Pro", "sans-serif"],
     // },
     borderWidth: {
       DEFAULT: "1px",
@@ -56,33 +56,20 @@ module.exports = {
         "w-5": "5%",
       },
       colors: {
-        // yellow: "#FFDC83",
-        outline: "#E7E8E7",
-        background: "#F2F1F1",
-        easiGrey: "#DDDEDD",
-        heading: "#292A29",
-        bodyDark: "#515251",
-        bodyNormal: "#8D8E8D",
-        bodyLight: "#B5B6B5",
-        tertiary2: "#F5D5D2",
-        tertiary3: "#D7CB9C",
-        black: "#171717",
-        gray: "#D8E1EF",
-        highlight: "#F0F7EB",
-        lightBlue: "#EFF6FF",
-        lightGreen: "#2196531A",
-        primaryDark: "#093028",
-        inActive: "#378979",
+        grey: {
+          light: "#909090",
+          dark: "#868585",
+        },
 
         primary: {
-          DEFAULT: "#11453B",
+          DEFAULT: "#D1643A",
           hover: "#25594F",
           pressed: "#073B31",
           disabled: "#75A99F",
         },
 
         secondary: {
-          DEFAULT: "#EA4E4B",
+          DEFAULT: "#1D3548",
           hover: "#FE625F",
           pressed: "#EA4E4B",
           disabled: "#FFB2AF",

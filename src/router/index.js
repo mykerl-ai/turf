@@ -6,17 +6,21 @@ const routes = [
     path: "/",
     component: () => import("@/views/RegisterPage.vue"),
   },
+  // {
+  //   path: "/home",
+  //   component: () => import("@/views/HomePage.vue"),
+  // },
   {
     path: "/tabs/",
     component: TabsPage,
     children: [
       {
         path: "",
-        redirect: "/tabs/tab1",
+        redirect: "/home",
       },
       {
-        path: "tab1",
-        component: () => import("@/views/Tab1Page.vue"),
+        path: "/home",
+        component: () => import("@/views/HomePage.vue"),
       },
       {
         path: "tab2",
