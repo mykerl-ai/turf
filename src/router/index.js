@@ -35,6 +35,10 @@ const routes = [
         component: () => import("@/views/HomePage.vue"),
       },
       {
+        path: "/book",
+        component: () => import("@/views/BookDate.vue"),
+      },
+      {
         path: "tab2",
         component: () => import("@/views/Tab2Page.vue"),
       },
