@@ -1,7 +1,7 @@
 <template>
   <ion-page>
-    <ion-content class="ion-padding">
-      <div class="grid grid-cols-2 items-center w-full mb-16 mt-4">
+    <ion-header>
+      <div class="grid grid-cols-2 p-4 items-center w-full my-4">
         <div
           class="grid grid-flow-col auto-cols-auto gap-3 whitespace-nowrap items-center rounded-2xl"
         >
@@ -27,7 +27,8 @@
           <img src="@/assets/icons/hamburger.svg" alt="" />
         </div>
       </div>
-
+    </ion-header>
+    <ion-content class="ion-padding">
       <div class="grid grid-flow-col auto-cols-auto">
         <h1 class="text-4xl capitalize font-bold text-secondary title-font">
           find your <br />
@@ -41,13 +42,129 @@
         </div>
         <!-- <img class="-ml-12 -mt-4 w-full" src="@/assets/icons/box.svg" alt="" /> -->
       </div>
+
+      <h3 class="my-9 capitalize text-secondary text-lg font-medium">
+        recommended
+      </h3>
+
+      <div class="mt-16">
+        <swiper
+          @swiper="setSwiperInstance"
+          :slides-per-view="1.2"
+          :space-between="10"
+        >
+          <swiper-slide
+            @click="
+              $router.push({ name: 'ViewApartment', params: { id: data.name } })
+            "
+            v-for="(data, index) in swiperData"
+            :key="index"
+          >
+            <div class="slide"></div>
+            <div
+              :class="index === slides.activeIndex ? 'taller-slide' : 'mt-8'"
+              :style="{
+                backgroundImage: 'url(' + house + ')',
+              }"
+              class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 contain no-repeat items-end items-self-end self-end rounded-2xl p-3"
+            >
+              <div class="z-10 text-left">
+                <p class="capitalize text-left font-bold text-white w-full">
+                  {{ data.name }}
+                </p>
+                <span class="-mt-2 text-sm text-grey-light">{{
+                  data.street
+                }}</span>
+
+                <div
+                  class="my-4 grid grid-flow-col auto-cols-auto items-center justify-between"
+                >
+                  <div class="capitalize">
+                    <p class="text-white font-medium">{{ data.price }}</p>
+                    <span class="text-sm text-grey-light"
+                      >per {{ data.tenure }}</span
+                    >
+                  </div>
+
+                  <div
+                    class="rounded-3xl bg-primary capitalize p-4 text-xs font-bold text-white"
+                  >
+                    360° view
+                  </div>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+          <!-- <swiper-slide>Slide 2</swiper-slide>
+          <swiper-slide>Slide 3</swiper-slide> -->
+        </swiper>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup>
 import img from "@/assets/img/profile.png";
-import { IonPage, IonContent } from "@ionic/vue";
+import house from "@/assets/img/house.png";
+import { IonPage, IonContent, IonHeader } from "@ionic/vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { ref } from "vue";
+
+import "swiper/css";
+import "@ionic/vue/css/ionic-swiper.css";
+
+const slides = ref({});
+
+const setSwiperInstance = (swiper) => {
+  slides.value = swiper;
+};
+
+const swiperData = ref([
+  {
+    name: "alexis avenue",
+    street: "278 Macathy street",
+    price: "$1,800",
+    tenure: "month",
+  },
+  {
+    name: "Dremy avenue",
+    street: "12 Dorian street",
+    price: "$3,600",
+    tenure: "year",
+  },
+]);
+
+// const currentIndex = ref(0);
+// const onSlideChange = (e) => {
+//   console.log(e, currentIndex);
+// };
 </script>
 
-<style scoped></style>
+<style scoped>
+.slide {
+  background: linear-gradient(
+    180deg,
+    rgba(217, 217, 217, 0) 28.55%,
+    rgba(18, 25, 37, 0.87) 76.2%
+  );
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)); */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* z-index: -1; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.slide-content {
+  /* height: 100%; */
+  transition: height 0.6s ease-in-out; /* Add a smooth transition for the slide height */
+}
+
+.taller-slide {
+  height: 28rem; /* Adjust the height as per your requirement */
+}
+</style>

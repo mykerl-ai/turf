@@ -56,9 +56,11 @@ module.exports = {
         "w-5": "5%",
       },
       colors: {
+        gradient: "rgb(134, 133, 133)",
         grey: {
           light: "#909090",
           dark: "#868585",
+          gradient: "rgba(134, 133, 133, 0.2)",
         },
 
         primary: {

@@ -97,7 +97,7 @@ const tabs = reactive([
 ion-tab-bar {
   --background: #1d3548;
   --color: white;
-  margin: 0 20px 20px 20px;
+  margin: 20px;
   border-radius: 20px;
 }
 

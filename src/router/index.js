@@ -6,6 +6,18 @@ const routes = [
     path: "/",
     component: () => import("@/views/RegisterPage.vue"),
   },
+
+  {
+    path: "/apartment/:id",
+    name: "ViewApartment",
+    component: () => import("@/views/ViewApartment.vue"),
+  },
+
+  {
+    path: "/gallery/:id",
+    name: "ApartmentGallery",
+    component: () => import("@/views/ApartmentGallery.vue"),
+  },
   // {
   //   path: "/home",
   //   component: () => import("@/views/HomePage.vue"),
