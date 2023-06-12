@@ -1,11 +1,12 @@
 <template>
   <ion-page>
-    <BackButton :orange="true" />
+    <BackButton class="m-3 z-10" :orange="true" />
 
     <ion-content>
+      <div class="slide pointer-events-none"></div>
       <div
         :style="{
-          backgroundImage: 'url(' + img2 + ')',
+          backgroundImage: 'url(' + activeImg + ')',
         }"
         class="w-full bg grid items-center items-self-center self-center"
       >
@@ -13,7 +14,7 @@
           class="w-full grid grid-flow-row auto-rows-auto h-80 contain no-repeat items-end items-self-end self-end"
         >
           <div
-            class="grid grid-flow-col justify-around auto-cols-auto mb-4 gap-3 w-full"
+            class="grid grid-flow-col justify-around auto-cols-auto mb-12 gap-3 w-full"
           >
             <div v-for="(data, index) in swiperData" :key="index">
               <!-- <div class="slide"></div> -->
@@ -27,7 +28,7 @@
                 :style="{
                   backgroundImage: 'url(' + data.image + ')',
                 }"
-                class="slide-content cursor-pointer border-2 border-primary no-repeat cover rounded-2xl p-3"
+                class="slide-content stack cursor-pointer border-2 border-primary no-repeat shrinkImg rounded-2xl p-3"
               ></div>
             </div>
           </div>
@@ -43,12 +44,13 @@ import BackButton from "@/components/BackButton.vue";
 
 import { ref } from "vue";
 
-import img2 from "@/assets/img/gallery-image.png";
+// import img2 from "@/assets/img/gallery-image.png";
 import img from "@/assets/img/gallery-image.png";
 import house from "@/assets/img/house.png";
 import map from "@/assets/img/map.png";
 
 const activeIndex = ref(1);
+const activeImg = ref(null);
 
 const swiperData = ref([
   {
@@ -62,24 +64,46 @@ const swiperData = ref([
     image: map,
   },
 ]);
+activeImg.value = swiperData.value[0].image;
 
 const setActive = (num) => {
   activeIndex.value = num;
+  activeImg.value = swiperData.value[num].image;
 };
 </script>
 
 <style scoped>
+.shrinkImg {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(29, 53, 72, 0.2);
-  /* z-index: -1; */
-  background-repeat: no-repeat;
+
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.stack {
+  z-index: 999;
+}
+.slide {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(
+    29,
+    53,
+    72,
+    0.1
+  ); /* Adjust the opacity (last value) as desired */
 }
 .slide-content {
   /* height: 100%; */
