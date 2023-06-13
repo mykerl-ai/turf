@@ -14,7 +14,15 @@
     <ion-content class="ion-padding">
       <TurfSearch />
 
-      <div class="relative my-8">
+      <div
+        @click="
+          $router.push({
+            name: 'ViewApartment',
+            params: { id: swiperData[0].name },
+          })
+        "
+        class="cursor-pointer relative my-8"
+      >
         <div class="slide"></div>
         <div
           :style="{
@@ -79,8 +87,23 @@
           </div>
 
           <div
-            class="w-12 h-full bg-secondary grid border-r border-primary justify-end justify-self-end self-end rounded-r-2xl"
-          ></div>
+            class="w-12 h-full bg-secondary grid grid-flow-row gap-0 auto-rows-auto border-r border-primary justify-center justify-self-end items-center self-end rounded-r-2xl"
+          >
+            <div class="grid grid-flow-col gap-1 auto-cols-auto text-white">
+              <span class="text-white text-sm">02</span>
+              <img src="@/assets/icons/garage.svg" alt="" />
+            </div>
+
+            <div class="grid grid-flow-col gap-1 auto-cols-auto text-white">
+              <span class="text-white text-sm">05</span>
+              <img src="@/assets/icons/bedroom.svg" alt="" />
+            </div>
+
+            <div class="grid grid-flow-col gap-1 auto-cols-auto text-white">
+              <span class="text-white text-sm">02</span>
+              <img src="@/assets/icons/toilet.svg" alt="" />
+            </div>
+          </div>
         </div>
       </div>
     </ion-content>

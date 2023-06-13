@@ -66,7 +66,8 @@
               :style="{
                 backgroundImage: 'url(' + house + ')',
               }"
-              class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 contain no-repeat items-end items-self-end self-end rounded-2xl p-3"
+              style="background-repeat: no-repeat; background-size: cover"
+              class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 cover no-repeat items-end items-self-end self-end rounded-2xl p-3"
             >
               <div class="z-10 text-left">
                 <p class="capitalize text-left font-bold text-white w-full">

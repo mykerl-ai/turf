@@ -4,6 +4,13 @@ import TabsPage from "../views/TabsPage.vue";
 const routes = [
   {
     path: "/",
+    name: "Login",
+    component: () => import("@/views/LoginPage.vue"),
+  },
+
+  {
+    path: "/register",
+    name: "Register",
     component: () => import("@/views/RegisterPage.vue"),
   },
 
@@ -32,6 +39,7 @@ const routes = [
       },
       {
         path: "/home",
+        name: "Home",
         component: () => import("@/views/HomePage.vue"),
       },
       {
