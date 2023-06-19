@@ -11,6 +11,7 @@ import { IonApp, IonRouterOutlet } from "@ionic/vue";
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Miriam+Libre:wght@400;700&display=swap");
 * {
   font-family: "Maven Pro";
   -webkit-font-smoothing: antialiased;
@@ -20,6 +21,12 @@ import { IonApp, IonRouterOutlet } from "@ionic/vue";
 
 .title-font {
   font-family: "Almarai", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.browse-font {
+  font-family: "Miriam Libre", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
