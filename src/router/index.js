@@ -18,10 +18,17 @@ const routes = [
     name: "ApartmentGallery",
     component: () => import("@/views/ApartmentGallery.vue"),
   },
-  // {
-  //   path: "/home",
-  //   component: () => import("@/views/HomePage.vue"),
-  // },
+  {
+    path: "/portal",
+    name: "PortalPage",
+    component: () => import("@/views/PortalPage.vue"),
+  },
+
+  {
+    path: "/payment",
+    name: "PaymentPage",
+    component: () => import("@/views/PaymentPage.vue"),
+  },
   {
     path: "/tabs/",
     component: TabsPage,
