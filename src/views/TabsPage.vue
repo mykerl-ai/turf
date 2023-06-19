@@ -83,9 +83,9 @@ const tabs = reactive([
   },
 
   {
-    tab: "profile",
-    href: "/profile",
-    slug: "profile",
+    tab: "portal",
+    href: "/portal",
+    slug: "portal",
     label: "profile",
     icon: profile,
     activeICon: profileActive,
