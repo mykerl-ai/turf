@@ -61,6 +61,9 @@ module.exports = {
           light: "#909090",
           dark: "#868585",
           gradient: "rgba(134, 133, 133, 0.2)",
+          darkblue: "rgba(29, 53, 72, 0.2)",
+          darkBlueText: "rgba(29, 53, 72, 0.6)",
+          faint: "rgba(134, 133, 133, 0.1)",
         },
 
         primary: {

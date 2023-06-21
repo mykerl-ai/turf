@@ -25,17 +25,7 @@ const routes = [
     name: "ApartmentGallery",
     component: () => import("@/views/ApartmentGallery.vue"),
   },
-  {
-    path: "/portal",
-    name: "PortalPage",
-    component: () => import("@/views/PortalPage.vue"),
-  },
 
-  {
-    path: "/payment",
-    name: "PaymentPage",
-    component: () => import("@/views/PaymentPage.vue"),
-  },
   {
     path: "/tabs/",
     component: TabsPage,
@@ -52,6 +42,37 @@ const routes = [
       {
         path: "/book",
         component: () => import("@/views/BookDate.vue"),
+      },
+      {
+        path: "/portal",
+        name: "PortalPage",
+        component: () => import("@/views/PortalPage.vue"),
+      },
+
+      {
+        path: "/payment",
+        name: "PaymentPage",
+        component: () => import("@/views/PaymentPage.vue"),
+      },
+      {
+        path: "/payment/plan",
+        name: "PaymentPlan",
+        component: () => import("@/views/PaymentPlan.vue"),
+      },
+      {
+        path: "/payment/plan/:id",
+        name: "PaymentPlanDetails",
+        component: () => import("@/views/PaymentPlanDetails.vue"),
+      },
+      {
+        path: "/payment/create-plan/:id",
+        name: "CreatePlan",
+        component: () => import("@/views/CreatePlan.vue"),
+      },
+      {
+        path: "/payment/final/:id",
+        name: "FinalStep",
+        component: () => import("@/views/FinalStep.vue"),
       },
       {
         path: "tab2",

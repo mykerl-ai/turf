@@ -72,6 +72,7 @@
             <div class="grid w-full px-4 mt-5 items-center">
               <div class="border-2 border-primary p-2 w-full rounded-2xl">
                 <TurfButton
+                  :auth="true"
                   @click="$router.push({ name: 'Register' })"
                   class="font-normal mt-0 w-full text-sm"
                   color="primary"
@@ -134,6 +135,7 @@
             <div class="grid w-full px-4 mt-5 items-center">
               <div class="border-2 border-primary p-2 w-full rounded-2xl">
                 <TurfButton
+                  :auth="true"
                   class="font-normal mt-0 w-full text-sm"
                   color="primary"
                   ><span class="font-medium text-white text-lg"

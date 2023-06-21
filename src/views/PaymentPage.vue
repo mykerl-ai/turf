@@ -68,5 +68,7 @@
 </template>
 
 <script setup>
+import { IonPage, IonContent, IonHeader } from "@ionic/vue";
+
 import BackButton from "@/components/BackButton.vue";
 </script>

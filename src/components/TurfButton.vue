@@ -119,6 +119,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  auth: {
+    type: Boolean,
+    default: false,
+  },
   disbaled: {
     type: Boolean,
     default: false,
@@ -141,6 +145,12 @@ const buttonPadding = computed(() => {
     return "15px";
   }
 });
+const buttonRadius = computed(() => {
+  if (!props.auth) {
+    return `16px`;
+  }
+  return "10px";
+});
 
 const loaderColor = computed(() => {
   return props.fill == "solid" ? "light" : props.color;
@@ -153,6 +163,7 @@ ion-button.custom {
   --padding-bottom: v-bind(buttonPadding);
   --padding-start: 15px;
   --padding-end: 15px;
+  --border-radius: v-bind(buttonRadius);
   --border-width: 1px;
   text-transform: none !important;
 }

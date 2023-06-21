@@ -5,7 +5,7 @@
         <ion-title>Tab 1</ion-title>
       </ion-toolbar>
     </ion-header> -->
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="false">
       <ion-backdrop class="backdrop h-screen"></ion-backdrop>
       <div v-show="step != 1" @click="step = 1" class="absolute top-8 right-9">
         <svg
@@ -81,6 +81,7 @@
             <div class="grid w-full px-4 mt-5 items-center">
               <div class="border-2 border-primary p-2 w-full rounded-2xl">
                 <TurfButton
+                  :auth="true"
                   @click="$router.push({ name: 'Login' })"
                   class="font-normal mt-0 w-full text-sm"
                   color="primary"
@@ -199,6 +200,7 @@
             <div class="grid w-full px-4 mt-5 items-center">
               <div class="border-2 border-primary p-2 w-full rounded-2xl">
                 <TurfButton
+                  :auth="true"
                   @click="$router.push({ name: 'Home' })"
                   class="font-normal mt-0 w-full text-sm"
                   color="primary"
@@ -369,7 +371,7 @@ function previewFiles(e) {
 
 <style scoped>
 .backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -380,16 +382,18 @@ function previewFiles(e) {
   background-position: center;
   opacity: 0.8; /* Adjust the opacity as desired */
   z-index: -1;
+  overflow: hidden;
 }
 .backdrop::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.85);
+  overflow: hidden;
 }
 
 input::placeholder {

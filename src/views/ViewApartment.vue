@@ -76,7 +76,7 @@
         </p>
 
         <div
-          class="my-6 grid grid-cols-2 p-4 items-center w-full bg-grey-gradient rounded-xl"
+          class="mt-6 grid grid-cols-2 p-4 items-center w-full bg-grey-gradient rounded-xl"
         >
           <div
             class="grid grid-flow-col auto-cols-auto gap-3 whitespace-nowrap items-center rounded-2xl"
@@ -104,10 +104,22 @@
           </div>
 
           <div
-            class="col-span-2 bg-secondary w-full text-sm text-white p-2 rounded-2xl mt-5 capitalize"
+            class="col-span-2 bg-secondary w-full text-sm text-white p-2 rounded-2xl mt-3 capitalize"
           >
             04 bedrooms 04 bathrooms 02 living rooms
           </div>
+        </div>
+        <TurfButton
+          class="w-full my-4 col-span-2 grid"
+          :block="true"
+          shape="round"
+          color="primary"
+          ><span class="text-white font-medium capitalize">
+            Schedule a viewing</span
+          ></TurfButton
+        >
+        <div class="w-full text-secondary font-bold mt-5 mb-2 text-base">
+          About
         </div>
         <div class="w-full text-grey-dark text-sm">
           Become what you live ,live in what you want to become, Life is too
@@ -134,7 +146,7 @@
             shape="round"
             color="primary"
             ><span class="text-white font-medium capitalize">
-              Book now</span
+              Pay now</span
             ></TurfButton
           >
         </div>

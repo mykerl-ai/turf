@@ -43,11 +43,11 @@
         <!-- <img class="-ml-12 -mt-4 w-full" src="@/assets/icons/box.svg" alt="" /> -->
       </div>
 
-      <h3 class="my-9 capitalize text-secondary text-lg font-medium">
+      <h3 class="mt-6 capitalize text-secondary text-base font-medium">
         recommended
       </h3>
 
-      <div class="mt-16">
+      <div class="mt-3">
         <swiper
           @swiper="setSwiperInstance"
           :slides-per-view="1.2"
