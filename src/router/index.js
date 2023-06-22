@@ -69,6 +69,23 @@ const routes = [
         name: "CreatePlan",
         component: () => import("@/views/CreatePlan.vue"),
       },
+
+      {
+        path: "/inspect/schedule",
+        name: "Schedule",
+        component: () => import("@/views/SchedulePage.vue"),
+      },
+      {
+        path: "/inspect/schedule/:id",
+        name: "ScheduleDetails",
+        component: () => import("@/views/ScheduleDetails.vue"),
+      },
+      {
+        path: "/inspect/create-schedule/:id",
+        name: "CreateSchedule",
+        component: () => import("@/views/CreateSchedule.vue"),
+      },
+
       {
         path: "/payment/final/:id",
         name: "FinalStep",

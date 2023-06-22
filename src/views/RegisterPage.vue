@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header> -->
     <ion-content :fullscreen="false">
-      <ion-backdrop class="backdrop h-screen"></ion-backdrop>
+      <!-- <ion-backdrop class="backdrop h-screen"></ion-backdrop> -->
       <div v-show="step != 1" @click="step = 1" class="absolute top-8 right-9">
         <svg
           width="33"
@@ -21,206 +21,208 @@
           />
         </svg>
       </div>
-      <div class="z-40 w-full h-full">
-        <p
-          v-show="step === 1"
-          class="w-full text-white text-3xl mt-32 ml-12 capitalize"
-        >
-          <span class="browse-font text-6xl font-medium text-primary">b</span
-          ><span class="browse-font text-white">rowse</span> <br />
-          <span class="text-white font-medium">
-            Our Property <br />
-            Listing Now!</span
+      <div class="backdrop relative">
+        <div class="overflow-hidden absolute w-full h-screen">
+          <p
+            v-show="step === 1"
+            class="w-full text-white text-3xl mt-32 ml-12 capitalize"
           >
-        </p>
-        <!-- step one -->
-        <div v-if="step === 1" class="w-full">
-          <div
-            class="mt-40 grid grid-flow-row ml-3 items-center gap-6 auto-rows-auto w-full"
-          >
-            <input
-              class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-              type="text"
-              placeholder="Username"
-            />
-
-            <input
-              class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-              type="password"
-              placeholder="Password"
-            />
-          </div>
-
-          <div
-            class="grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
-          >
-            <img
-              @click="step = 2"
-              class="self-center justify-self-center"
-              src="@/assets/icons/register-arrow.svg"
-              alt=""
-            />
-            <svg
-              class="ml-2"
-              width="29"
-              height="6"
-              viewBox="0 0 29 6"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <span class="browse-font text-6xl font-medium text-primary">b</span
+            ><span class="browse-font text-white">rowse</span> <br />
+            <span class="text-white font-medium">
+              Our Property <br />
+              Listing Now!</span
             >
-              <rect width="19" height="6" rx="3" fill="white" />
-              <circle cx="26" cy="3" r="3" fill="#D1643A" />
-            </svg>
-          </div>
-
-          <div class="mt-10">
-            <div class="text-sm font-medium text-center text-white">
-              Have an account?
-              <span class="text-primary">Click below</span>
-            </div>
-            <div class="grid w-full px-4 mt-5 items-center">
-              <div class="border-2 border-primary p-2 w-full rounded-2xl">
-                <TurfButton
-                  :auth="true"
-                  @click="$router.push({ name: 'Login' })"
-                  class="font-normal mt-0 w-full text-sm"
-                  color="primary"
-                  ><span class="font-medium text-white text-lg"
-                    >Sign In</span
-                  ></TurfButton
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- step one -->
-
-        <!-- step two -->
-
-        <div v-else class="w-full">
-          <div
-            class="mt-28 grid grid-flow-row ml-3 items-center gap-9 auto-rows-auto w-full"
-          >
+          </p>
+          <!-- step one -->
+          <div v-if="step === 1" class="w-full">
             <div
-              @click="$refs.input.click()"
-              :style="
-                url.length
-                  ? null
-                  : {
-                      backgroundImage: 'url(' + avatar + ')',
-                    }
-              "
-              style="
-                border-radius: 40px;
-                background-color: rgba(29, 53, 72, 0.5);
-                background-repeat: no-repeat;
-                background-position: center;
-              "
-              class="relative justify-self-center border border-primary w-36 h-36"
+              class="mt-40 grid grid-flow-row ml-3 items-center gap-6 auto-rows-auto w-full"
             >
-              <img class="w-full h-full" v-if="url" :src="url" alt="" />
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Username"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="password"
+                placeholder="Password"
+              />
+            </div>
+
+            <div
+              class="grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
+            >
               <img
-                class="absolute top-28 -right-2"
-                src="@/assets/icons/add-icon.svg"
+                @click="step = 2"
+                class="self-center justify-self-center"
+                src="@/assets/icons/register-arrow.svg"
                 alt=""
               />
-            </div>
-
-            <input
-              v-show="hide === false"
-              ref="input"
-              :accept="allowedTypes.toString()"
-              @change="previewFiles($event)"
-              type="file"
-              class="custom-file-input"
-            />
-
-            <input
-              class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-              type="email"
-              placeholder="Email"
-            />
-
-            <div class="relative">
-              <span
-                v-if="!dateInput.length && hideText == false"
-                class="absolute top-3 text-white font-medium"
+              <svg
+                class="ml-2"
+                width="29"
+                height="6"
+                viewBox="0 0 29 6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Date of Birth</span
-              >
-              <input
-                @focus="hideText = true"
-                :class="dateInput.length ? 'text-white' : 'text-transparent'"
-                class="bg-none hidden-placeholder focus:outline-none p-2 border-b-2 bg-transparent w-11/12 font-medium border-primary"
-                type="date"
-                v-model="dateInput"
-              />
+                <rect width="19" height="6" rx="3" fill="white" />
+                <circle cx="26" cy="3" r="3" fill="#D1643A" />
+              </svg>
             </div>
 
-            <input
-              class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-              type="text"
-              placeholder="State"
-            />
-
-            <input
-              class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-              type="text"
-              placeholder="Address"
-            />
-          </div>
-
-          <div
-            class="grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
-          >
-            <img
-              @click="step = 2"
-              class="self-center justify-self-center"
-              src="@/assets/icons/register-arrow.svg"
-              alt=""
-            />
-            <svg
-              class="ml-2"
-              width="29"
-              height="6"
-              viewBox="0 0 29 6"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="19" height="6" rx="3" fill="white" />
-              <circle cx="26" cy="3" r="3" fill="#D1643A" />
-            </svg>
-          </div>
-
-          <div class="mt-10">
-            <div class="text-sm font-medium text-center text-white">
-              Have an account?
-              <span class="text-primary">Click below</span>
-            </div>
-            <div class="grid w-full px-4 mt-5 items-center">
-              <div class="border-2 border-primary p-2 w-full rounded-2xl">
-                <TurfButton
-                  :auth="true"
-                  @click="$router.push({ name: 'Home' })"
-                  class="font-normal mt-0 w-full text-sm"
-                  color="primary"
-                  ><span class="font-medium text-white text-lg"
-                    >Sign In</span
-                  ></TurfButton
-                >
+            <div class="mt-10">
+              <div class="text-sm font-medium text-center text-white">
+                Have an account?
+                <span class="text-primary">Click below</span>
+              </div>
+              <div class="grid w-full px-4 mt-5 items-center">
+                <div class="border-2 border-primary p-2 w-full rounded-2xl">
+                  <TurfButton
+                    :auth="true"
+                    @click="$router.push({ name: 'Login' })"
+                    class="font-normal mt-0 w-full text-sm"
+                    color="primary"
+                    ><span class="font-medium text-white text-lg"
+                      >Sign In</span
+                    ></TurfButton
+                  >
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <!-- step one -->
 
-        <!-- step two -->
+          <!-- step two -->
+
+          <div v-else class="w-full">
+            <div
+              class="mt-28 grid grid-flow-row ml-3 items-center gap-9 auto-rows-auto w-full"
+            >
+              <div
+                @click="$refs.input.click()"
+                :style="
+                  url.length
+                    ? null
+                    : {
+                        backgroundImage: 'url(' + avatar + ')',
+                      }
+                "
+                style="
+                  border-radius: 40px;
+                  background-color: rgba(29, 53, 72, 0.5);
+                  background-repeat: no-repeat;
+                  background-position: center;
+                "
+                class="relative justify-self-center border border-primary w-36 h-36"
+              >
+                <img class="w-full h-full" v-if="url" :src="url" alt="" />
+                <img
+                  class="absolute top-28 -right-2"
+                  src="@/assets/icons/add-icon.svg"
+                  alt=""
+                />
+              </div>
+
+              <input
+                v-show="hide === false"
+                ref="input"
+                :accept="allowedTypes.toString()"
+                @change="previewFiles($event)"
+                type="file"
+                class="custom-file-input"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="email"
+                placeholder="Email"
+              />
+
+              <div class="relative">
+                <span
+                  v-if="!dateInput.length && hideText == false"
+                  class="absolute top-3 text-white font-medium"
+                >
+                  Date of Birth</span
+                >
+                <input
+                  @focus="hideText = true"
+                  :class="dateInput.length ? 'text-white' : 'text-transparent'"
+                  class="bg-none hidden-placeholder focus:outline-none p-2 border-b-2 bg-transparent w-11/12 font-medium border-primary"
+                  type="date"
+                  v-model="dateInput"
+                />
+              </div>
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="State"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Address"
+              />
+            </div>
+
+            <div
+              class="grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
+            >
+              <img
+                @click="step = 2"
+                class="self-center justify-self-center"
+                src="@/assets/icons/register-arrow.svg"
+                alt=""
+              />
+              <svg
+                class="ml-2"
+                width="29"
+                height="6"
+                viewBox="0 0 29 6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="19" height="6" rx="3" fill="white" />
+                <circle cx="26" cy="3" r="3" fill="#D1643A" />
+              </svg>
+            </div>
+
+            <div class="mt-10">
+              <div class="text-sm font-medium text-center text-white">
+                Have an account?
+                <span class="text-primary">Click below</span>
+              </div>
+              <div class="grid w-full px-4 mt-5 items-center">
+                <div class="border-2 border-primary p-2 w-full rounded-2xl">
+                  <TurfButton
+                    :auth="true"
+                    @click="$router.push({ name: 'Home' })"
+                    class="font-normal mt-0 w-full text-sm"
+                    color="primary"
+                    ><span class="font-medium text-white text-lg"
+                      >Sign In</span
+                    ></TurfButton
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- step two -->
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup>
-import { IonBackdrop, IonPage, IonContent } from "@ionic/vue";
+import { IonPage, IonContent } from "@ionic/vue";
 import TurfButton from "@/components/TurfButton.vue";
 import avatar from "@/assets/img/avatar.png";
 import { ref, watch, computed } from "vue";
@@ -231,7 +233,7 @@ const props = defineProps({
   },
 });
 console.log(props);
-const step = ref(2);
+const step = ref(1);
 const hide = ref(true);
 const hideText = ref(false);
 const emit = defineEmits(["fileUrl"]);
@@ -371,7 +373,7 @@ function previewFiles(e) {
 
 <style scoped>
 .backdrop {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;

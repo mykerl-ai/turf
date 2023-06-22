@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs @ion-tabs-did-change="setActive($event)">
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar id="custom-tab" slot="bottom">
+      <ion-tab-bar :translucent="true" mode="ios" id="custom-tab" slot="bottom">
         <ion-tab-button
           v-for="tab in tabs"
           :key="tab.label"

@@ -67,7 +67,7 @@ export default {
 </script>
 
 <script setup>
-// import { ref, watch } from "vue";
+import { ref } from "vue";
 // import { storeToRefs } from "pinia";
 // import { useDataStore } from "@/stores/data.js";
 import {
@@ -99,7 +99,7 @@ console.log(props);
 // const loading = ref(false);
 // const input = ref("");
 // const inputValue = computed(() => props.modelValue);
-// const inputValue = ref("");
+const inputValue = ref("");
 
 // watch(inputValue, async () => {
 //   isSuggestion.value = true;

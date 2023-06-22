@@ -108,14 +108,21 @@
             </div>
           </swiper-slide>
           <!-- second  -->
-          <swiper-slide>
-            <div class="h-64 text-left w-64 bg-secondary rounded-2xl p-3">
+          <swiper-slide @click="$router.push({ name: 'Schedule' })">
+            <div
+              class="h-64 relative text-left w-64 bg-secondary rounded-2xl p-3"
+            >
               <div class="w-full grid grid-row gap-5">
                 <span class="text-sm text-white">
                   Pick a Date: <span class="text-primary">14th mar 23</span>
                 </span>
 
-                <div class="h-20 w-full rounded-2xl bg-black"></div>
+                <div
+                  :style="{
+                    backgroundImage: 'url(' + driver + ')',
+                  }"
+                  class="h-20 bg-no-repeat bg-cover rounded-tl-3xl rounded-br-3xl w-full bg-black"
+                ></div>
 
                 <div class="w-full flex items-center gap-4">
                   <div class="h-16 w-16 bg-black rounded-full"></div>
@@ -130,6 +137,19 @@
                     >
                   </div>
                 </div>
+
+                <!-- <div
+                  @click.self="
+                    $router.push({
+                      name: 'CreateSchedule',
+                      params: { id: 'new' },
+                    })
+                  "
+                  class="z-10 bg-primary p-2 text-center text-white self-end absolute bottom-2 text-xs left-36 rounded-3xl mt-2 w-24"
+                >
+                  Reschedule
+                </div> -->
+
                 <!-- <div class="w-full mb-4">
               <button class="h-9 w-28 bg-white rounded-2xl">
                 <p class="text-stone-600 text-sm font-medium">Pay Now</p>
@@ -157,6 +177,7 @@ import "swiper/css/pagination";
 
 import "@ionic/vue/css/ionic-swiper.css";
 import { IonHeader, IonPage, IonContent } from "@ionic/vue";
+import driver from "@/assets/img/driver.png";
 
 import BackButton from "@/components/BackButton.vue";
 

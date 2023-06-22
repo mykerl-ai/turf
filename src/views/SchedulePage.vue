@@ -13,7 +13,7 @@
           <div class="z-10 text-left">
             <div class="grid grid-flow-row auto-rows-auto">
               <p class="capitalize pl-4 text-lg font-medium text-white">
-                Payment Plan
+                Schedule Date
               </p>
             </div>
             <p class="uppercase text-white pl-4 font-bold text-3xl">N/A</p>
@@ -24,12 +24,12 @@
         </div>
 
         <!-- <h2 class="mt-0 mb-1 text-secondary text-3xl font-bold capitalize">
-          {{ swiperData[0].name }}
-        </h2>
-
-        <p class="text-sm text-grey-light font-medium capitalize">
-          {{ swiperData[0].street }}
-        </p> -->
+            {{ swiperData[0].name }}
+          </h2>
+  
+          <p class="text-sm text-grey-light font-medium capitalize">
+            {{ swiperData[0].street }}
+          </p> -->
 
         <div class="mt-6 p-4 items-center w-full bg-grey-darkblue rounded-xl">
           <div class="w-full text-secondary font-bold text-base">Note</div>
@@ -48,27 +48,28 @@
         <div
           @click="
             $router.push({
-              name: 'PaymentPlanDetails',
+              name: 'ScheduleDetails',
               params: { id: 'planname' },
             })
           "
-          class="bg-secondary rounded-2xl p-3 grid grid-flow-col auto-cols-auto justify-start gap-6"
+          class="bg-secondary rounded-2xl p-3 grid grid-flow-col auto-cols-auto justify-between gap-6"
         >
           <div class="w-20 h-20 bg-primary rounded-2xl"></div>
 
           <div
-            class="grid grid-flow-row auto-rows-auto gap-4 self-center justify-start"
+            class="grid grid-flow-row auto-rows-auto gap-2 self-center justify-start"
           >
-            <p class="capitalize font-medium text-white">Investment plan</p>
+            <p class="capitalize -mt-3 font-medium text-white">
+              Scheduled Date
+            </p>
             <div
               class="grid grid-flow-col auto-cols-auto text-white justify-start gap-6"
             >
               <div class="capitalize">
-                <p class="text-xs text-white font-medium">N3M</p>
-                <p class="text-xs text-white font-medium">Target</p>
+                <p class="text-sm text-white font-medium">14, June 2023.</p>
               </div>
 
-              <div class="capitalize">
+              <!-- <div class="capitalize">
                 <p class="text-xs text-white font-medium">N950k</p>
                 <p class="text-xs text-white font-medium">Saved</p>
               </div>
@@ -76,9 +77,14 @@
               <div class="capitalize">
                 <p class="text-xs text-white font-medium">76</p>
                 <p class="text-xs text-white font-medium">Days Left</p>
-              </div>
+              </div> -->
             </div>
           </div>
+
+          <span
+            class="text-sm self-start justify-self-end justify-end text-right grid text-primary items-end items-self-end"
+            >Pending</span
+          >
         </div>
       </div>
     </ion-content>
@@ -98,35 +104,38 @@
         <div
           class="bg-secondary w-12 h-12 p-2 grid grid-rows-1 justify-center items-center rounded-2xl"
         >
-          <img src="@/assets/icons/wallet-icon.svg" alt="" />
+          <img src="@/assets/icons/calendar.svg" alt="" />
         </div>
 
         <p class="text-grey-light font-medium capitalize mt-4">
-          Start Your Payment Plan
+          Schedule an Appointment
         </p>
 
         <div class="grid grid-flow-row auto-rows-auto gap-5 mt-5">
           <div
-            v-for="plan in planTypes"
-            :key="plan.name"
+            v-for="schedule in scheduleTypes"
+            :key="schedule.name"
             @click="
               () => {
                 cancelModal = false;
-                $router.push({ name: 'CreatePlan', params: { id: plan.name } });
+                $router.push({
+                  name: 'CreateSchedule',
+                  params: { id: schedule.name },
+                });
               }
             "
             class="bg-grey-faint grid grid-flow-col auto-cols-auto gap-6 items-center rounded-3xl pt-3 pb-5 px-4"
           >
-            <div><img :src="plan.icon" alt="" /></div>
+            <div><img :src="schedule.icon" alt="" /></div>
 
             <div class="grid grid-flow-row auto-rows-auto">
               <p class="text-secondary mb-1 font-medium capitalize">
-                {{ plan.name }}
+                {{ schedule.name }}
               </p>
               <p
                 class="text-grey-darkBlueText pr-9 text-sm font-medium mt-1 capitalize"
               >
-                {{ plan.text }}
+                {{ schedule.text }}
               </p>
             </div>
           </div>
@@ -142,9 +151,9 @@ import TurfDrawer from "@/components/TurfDrawer.vue";
 import TurfSegment from "@/components/TurfSegment.vue";
 // import img from "@/assets/img/profile.png";
 import planImg from "@/assets/img/plan.png";
-import profileIcon from "@/assets/icons/profile-secondary.svg";
+
+import carIcon from "@/assets/icons/car.svg";
 import universeIcon from "@/assets/icons/universe-icon.svg";
-import doubleProfile from "@/assets/icons/double-profile.svg";
 
 import {
   IonPage,
@@ -166,21 +175,16 @@ const data = ref([
   { label: "Completed", value: "completed" },
 ]);
 
-const planTypes = ref([
+const scheduleTypes = ref([
   {
-    name: "Personal",
+    name: "Physical Appointment",
     text: "Become what you live ,live in what you want to become,Life is ",
-    icon: profileIcon,
+    icon: carIcon,
   },
   {
-    name: "Universal Plan",
+    name: "Virtual Appointment",
     text: "Become what you live ,live in what you want to become,Life is ",
     icon: universeIcon,
-  },
-  {
-    name: "Family Plan",
-    text: "Become what you live ,live in what you want to become,Life is ",
-    icon: doubleProfile,
   },
 ]);
 const cancelModal = ref(false);
@@ -189,10 +193,10 @@ const cancelModal = ref(false);
 <style scoped>
 .slide {
   /* background: linear-gradient(
-      180deg,
-      rgba(217, 217, 217, 0) 28.55%,
-      rgba(18, 25, 37, 0.87) 76.2%
-    ); */
+        180deg,
+        rgba(217, 217, 217, 0) 28.55%,
+        rgba(18, 25, 37, 0.87) 76.2%
+      ); */
   position: fixed;
   top: 0;
   left: 0;

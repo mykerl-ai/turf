@@ -12,7 +12,7 @@
         <ion-range
           :disabled="true"
           aria-label="Volume"
-          :value="50"
+          :value="100"
           :max="100"
         ></ion-range>
       </div>
@@ -21,7 +21,42 @@
           <TurfUpload @fileUrl="uploadFile = $event" />
         </div>
 
-        <!-- <TurfButton color="primary" fill="solid">Finish</TurfButton> -->
+        <TurfDate
+          :fullDate="true"
+          @update="startDate = $event"
+          label="Start Date"
+        ></TurfDate>
+
+        <div class="text-sm text-grey-dark font-medium">
+          Payment Source of Fund
+        </div>
+
+        <div
+          class="rounded-2xl w-32 h-28 card p-3 grid grid-flow-row auto-rows-auto gap-1 justify-items-center justify-center"
+        >
+          <p
+            v-if="cardAdded"
+            class="text-secondary text-sm font-medium self-center"
+          >
+            Debit Card
+          </p>
+          <span v-if="cardAdded" class="text-secondary text-xs font-medium"
+            >******342</span
+          >
+
+          <ion-icon
+            v-if="!cardAdded"
+            class="text-grey-dark self-center text-2xl font-bold"
+            :icon="add"
+          ></ion-icon>
+          <span v-if="!cardAdded" class="text-grey-dark text-sm font-medium"
+            >Add Card</span
+          >
+        </div>
+
+        <TurfButton type="submit" color="primary" fill="solid"
+          >Finish</TurfButton
+        >
       </form>
     </ion-content>
   </ion-page>
@@ -29,15 +64,19 @@
 
 <script setup>
 import BackButton from "@/components/BackButton.vue";
-// import TurfInput from "@/components/TurfInput.vue";
+import TurfDate from "@/components/TurfDate.vue";
 // import TurfSelect from "@/components/TurfSelect.vue";
-// import TurfButton from "@/components/TurfButton.vue";
+import TurfButton from "@/components/TurfButton.vue";
 import TurfUpload from "@/components/TurfUpload.vue";
 
-import { IonPage, IonRange, IonContent, IonHeader } from "@ionic/vue";
+import { IonPage, IonRange, IonContent, IonHeader, IonIcon } from "@ionic/vue";
+import { add } from "ionicons/icons";
+
 import { ref } from "vue";
 
 const uploadFile = ref(null);
+const cardAdded = ref(false);
+const startDate = ref("");
 </script>
 
 <style scoped>
@@ -70,5 +109,9 @@ ion-range::part(knob) {
   background: rgba(134, 133, 133, 0.1) !important;
   border: 1px solid rgba(134, 133, 133, 0.2);
   border-radius: 20px;
+}
+
+.card {
+  background: rgba(134, 133, 133, 0.1) !important;
 }
 </style>
