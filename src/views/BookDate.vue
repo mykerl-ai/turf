@@ -112,7 +112,7 @@
 
 <script setup>
 import img from "@/assets/img/profile.png";
-import house from "@/assets/img/house.png";
+import house from "@/assets/img/house.jpg";
 import { IonPage, IonContent, IonHeader } from "@ionic/vue";
 import { ref } from "vue";
 

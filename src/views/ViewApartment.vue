@@ -67,7 +67,7 @@
             <swiper-slide>Slide 3</swiper-slide> -->
         </swiper>
 
-        <h2 class="mt-0 mb-1 text-secondary text-3xl font-bold capitalize">
+        <h2 class="-mt-2 mb-1 text-secondary text-2xl font-bold capitalize">
           {{ swiperData[0].name }}
         </h2>
 
@@ -131,7 +131,7 @@
     <ion-footer :translucent="true">
       <ion-toolbar>
         <div
-          class="my-4 grid grid-flow-col auto-cols-auto py-0 px-4 items-center justify-between"
+          class="mt-2 grid grid-flow-col auto-cols-auto py-0 px-4 items-center justify-between"
         >
           <div class="capitalize">
             <p class="text-secondary font-bold">{{ swiperData[0].price }}</p>
@@ -158,7 +158,7 @@
 <script setup>
 import BackButton from "@/components/BackButton.vue";
 import TurfButton from "@/components/TurfButton.vue";
-import house from "@/assets/img/house.png";
+import house from "@/assets/img/house.jpg";
 import img from "@/assets/img/profile.png";
 
 import {

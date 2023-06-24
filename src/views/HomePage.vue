@@ -64,7 +64,7 @@
             <div
               :class="index === slides.activeIndex ? 'taller-slide' : 'mt-8'"
               :style="{
-                backgroundImage: 'url(' + house + ')',
+                backgroundImage: 'url(' + data.image + ')',
               }"
               style="background-repeat: no-repeat; background-size: cover"
               class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 cover no-repeat items-end items-self-end self-end rounded-2xl p-3"
@@ -106,7 +106,10 @@
 
 <script setup>
 import img from "@/assets/img/profile.png";
-import house from "@/assets/img/house.png";
+import house from "@/assets/img/house.jpg";
+import house1 from "@/assets/img/house1.jpg";
+import house2 from "@/assets/img/house2.jpg";
+import house3 from "@/assets/img/house3.jpg";
 import { IonPage, IonContent, IonHeader } from "@ionic/vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { ref } from "vue";
@@ -126,12 +129,28 @@ const swiperData = ref([
     street: "278 Macathy street",
     price: "$1,800",
     tenure: "month",
+    image: house,
+  },
+  {
+    name: "Brown avenue",
+    street: "232 Pascal street",
+    price: "$8,800",
+    tenure: "month",
+    image: house1,
   },
   {
     name: "Dremy avenue",
     street: "12 Dorian street",
     price: "$3,600",
     tenure: "year",
+    image: house2,
+  },
+  {
+    name: "Cobbs avenue",
+    street: "12 Coal street",
+    price: "$1,600",
+    tenure: "year",
+    image: house3,
   },
 ]);
 

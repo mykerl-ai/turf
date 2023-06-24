@@ -166,7 +166,7 @@
 
 <script setup>
 import img from "@/assets/img/profile.png";
-import house from "@/assets/img/house.png";
+import house from "@/assets/img/house.jpg";
 import { Pagination } from "swiper";
 
 import { Swiper, SwiperSlide } from "swiper/vue";

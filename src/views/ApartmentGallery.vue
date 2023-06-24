@@ -1,20 +1,19 @@
 <template>
-  <ion-page>
+  <ion-page
+    :style="{
+      backgroundImage: 'url(' + activeImg + ')',
+    }"
+    style="background-repeat: no-repeat; background-size: cover"
+  >
     <BackButton class="m-3 z-10" :orange="true" />
-
+    <div class="slide pointer-events-none"></div>
     <ion-content>
-      <div class="slide pointer-events-none"></div>
-      <div
-        :style="{
-          backgroundImage: 'url(' + activeImg + ')',
-        }"
-        class="w-full bg grid items-center items-self-center self-center"
-      >
+      <div class="w-full bg grid items-center items-self-center self-center">
         <div
-          class="w-full grid grid-flow-row auto-rows-auto h-80 contain no-repeat items-end items-self-end self-end"
+          class="w-full grid grid-flow-row auto-rows-auto h-80 items-end items-self-end self-end"
         >
           <div
-            class="grid grid-flow-col justify-around auto-cols-auto mb-12 gap-3 w-full"
+            class="grid grid-flow-col justify-around auto-cols-auto mb-12 gap-3 w-full overflow-x-scroll"
           >
             <div v-for="(data, index) in swiperData" :key="index">
               <!-- <div class="slide"></div> -->
@@ -46,8 +45,16 @@ import { ref } from "vue";
 
 // import img2 from "@/assets/img/gallery-image.png";
 import img from "@/assets/img/gallery-image.png";
-import house from "@/assets/img/house.png";
-import map from "@/assets/img/map.png";
+import house from "@/assets/img/house.jpg";
+import house1 from "@/assets/img/house1.jpg";
+import house2 from "@/assets/img/house2.jpg";
+import house3 from "@/assets/img/house3.jpg";
+import house4 from "@/assets/img/house1.jpg";
+import house5 from "@/assets/img/house2.jpg";
+import house6 from "@/assets/img/house3.jpg";
+import house7 from "@/assets/img/house1.jpg";
+import house8 from "@/assets/img/house3.jpg";
+// import map from "@/assets/img/map.png";
 
 const activeIndex = ref(1);
 const activeImg = ref(null);
@@ -57,12 +64,37 @@ const swiperData = ref([
     image: house,
   },
   {
+    image: house1,
+  },
+  {
+    image: house2,
+  },
+  {
+    image: house3,
+  },
+  {
     image: img,
+  },
+  {
+    image: house4,
+  },
+  {
+    image: house5,
+  },
+  {
+    image: house6,
   },
 
   {
-    image: map,
+    image: house7,
   },
+  {
+    image: house8,
+  },
+
+  // {
+  //   image: map,
+  // },
 ]);
 activeImg.value = swiperData.value[0].image;
 
@@ -73,6 +105,9 @@ const setActive = (num) => {
 </script>
 
 <style scoped>
+ion-content {
+  --ion-background-color: transparent !important;
+}
 .shrinkImg {
   background-size: cover;
   background-repeat: no-repeat;
