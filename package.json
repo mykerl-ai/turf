@@ -20,6 +20,7 @@
     "@capacitor/keyboard": "5.0.2",
     "@capacitor/splash-screen": "^5.0.2",
     "@capacitor/status-bar": "5.0.2",
+    "@fawmi/vue-google-maps": "^0.9.79",
     "@ionic/vue": "^7.0.12",
     "@ionic/vue-router": "^7.0.12",
     "@tailwindcss/line-clamp": "^0.4.4",

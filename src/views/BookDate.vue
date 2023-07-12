@@ -12,7 +12,7 @@
       </div>
     </ion-header>
     <ion-content class="ion-padding">
-      <TurfSearch />
+      <AddressSearch />
 
       <div
         @click="
@@ -23,7 +23,7 @@
         "
         class="cursor-pointer relative my-8"
       >
-        <div class="slide"></div>
+        <!-- <div class="slide"></div> -->
         <div
           :style="{
             backgroundImage: 'url(' + house + ')',
@@ -117,7 +117,8 @@ import { IonPage, IonContent, IonHeader } from "@ionic/vue";
 import { ref } from "vue";
 
 import BackButton from "@/components/BackButton.vue";
-import TurfSearch from "@/components/TurfSearch.vue";
+// import TurfSearch from "@/components/TurfSearch.vue";
+import AddressSearch from "@/components/AddressSearch.vue";
 
 const swiperData = ref([
   {

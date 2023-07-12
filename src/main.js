@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import { IonicVue } from "@ionic/vue";
+import VueGoogleMaps from "@fawmi/vue-google-maps";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css";
@@ -24,7 +25,15 @@ import "@ionic/vue/css/display.css";
 import "./theme/variables.css";
 import "./index.css";
 
-const app = createApp(App).use(IonicVue).use(router);
+const app = createApp(App)
+  .use(IonicVue)
+  .use(router)
+  .use(VueGoogleMaps, {
+    load: {
+      key: "AIzaSyBwS4eTwFMHed4ZGtrgokcDgCOPb4-JnXY",
+      libraries: "places",
+    },
+  });
 
 router.isReady().then(() => {
   app.mount("#app");
