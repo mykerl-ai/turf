@@ -382,7 +382,6 @@ function previewFiles(e) {
   background-image: url("../assets/img/map.png");
   background-size: cover;
   background-position: center;
-  opacity: 0.8; /* Adjust the opacity as desired */
   z-index: -1;
   overflow: hidden;
 }
@@ -394,7 +393,7 @@ function previewFiles(e) {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(29, 53, 72, 0.8);
   overflow: hidden;
 }
 

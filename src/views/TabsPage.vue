@@ -42,8 +42,8 @@ import homeActive from "@/assets/icons/homeactive.svg";
 import book from "@/assets/icons/book.svg";
 import bookActive from "@/assets/icons/bookactive.svg";
 
-import chat from "@/assets/icons/chat.svg";
-import chatActive from "@/assets/icons/chatactive.svg";
+// import chat from "@/assets/icons/chat.svg";
+// import chatActive from "@/assets/icons/chatactive.svg";
 
 import profile from "@/assets/icons/profile.svg";
 import profileActive from "@/assets/icons/profileactive.svg";
@@ -73,14 +73,14 @@ const tabs = reactive([
     activeICon: bookActive,
   },
 
-  {
-    tab: "chat",
-    href: "/chat",
-    slug: "chat",
-    label: "chat",
-    icon: chat,
-    activeICon: chatActive,
-  },
+  // {
+  //   tab: "chat",
+  //   href: "/chat",
+  //   slug: "chat",
+  //   label: "chat",
+  //   icon: chat,
+  //   activeICon: chatActive,
+  // },
 
   {
     tab: "portal",

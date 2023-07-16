@@ -28,80 +28,41 @@
           :style="{
             backgroundImage: 'url(' + house + ')',
           }"
-          class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-60 h-60 no-repeat items-end items-self-end self-end rounded-2xl p-3"
+          class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 no-repeat items-end items-self-end self-end rounded-2xl"
         ></div>
 
         <div
-          class="absolute bg-white top-7 rounded-2xl left-32 w-56 border border-primary h-auto shadow-xl grid grid-flow-col gap-0 auto-cols-auto"
+          class="bg-white -mt-28 pt-2 self-center rounded-2xl w-11/12 mx-auto h-auto shadow-xl grid grid-flow-col gap-0 auto-cols-auto"
         >
-          <div class="w-full p-3">
-            <h2 class="mt-0 mb-1 text-secondary text-sm font-bold capitalize">
-              {{ swiperData[0].name }}
-            </h2>
-
-            <p class="text-sm text-grey-light font-medium capitalize">
-              {{ swiperData[0].street }}
-            </p>
-
+          <div class="w-full grid grid-flow-row gap-4 auto-rows-auto p-3">
             <div
-              class="grid grid-flow-col my-5 auto-cols-auto gap-3 whitespace-nowrap items-center"
+              class="grid grid-flow-col gap-0 auto-cols-auto justify-between items-center"
             >
-              <div
-                class="w-8 h-8 rounded-full bg-contain"
-                :style="{
-                  backgroundImage: 'url(' + img + ')',
-                }"
-              ></div>
-
-              <div>
-                <p class="text-secondary text-xs w-full text-left font-medium">
-                  Andrew Williams
-                </p>
-
-                <span class="text-grey-light font-bold text-xs"
-                  >California, US</span
-                >
-              </div>
-            </div>
-
-            <div class="z-10 text-left">
-              <div
-                class="my-0 grid grid-flow-col auto-cols-auto items-start justify-between"
+              <h2
+                class="mt-0 mb-1 text-secondary text-lg font-medium capitalize"
               >
-                <div class="capitalize">
-                  <p class="text-secondary text-sm font-bold">
-                    {{ swiperData[0].price }}
-                  </p>
-                  <span class="text-xs text-grey-light"
-                    >per {{ swiperData[0].tenure }}</span
-                  >
-                </div>
+                {{ swiperData[0].name }}
+              </h2>
 
-                <div
-                  class="rounded-lg bg-primary capitalize p-1 text-center text-xs font-bold text-white"
-                >
-                  360° view
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="w-12 h-full bg-secondary grid grid-flow-row gap-0 auto-rows-auto border-r border-primary justify-center justify-self-end items-center self-end rounded-r-2xl"
-          >
-            <div class="grid grid-flow-col gap-1 auto-cols-auto text-white">
-              <span class="text-white text-sm">02</span>
-              <img src="@/assets/icons/garage.svg" alt="" />
+              <h2
+                class="mt-0 mb-1 text-secondary text-lg font-medium capitalize"
+              >
+                {{ swiperData[0].price }}
+              </h2>
             </div>
 
-            <div class="grid grid-flow-col gap-1 auto-cols-auto text-white">
-              <span class="text-white text-sm">05</span>
-              <img src="@/assets/icons/bedroom.svg" alt="" />
-            </div>
+            <div class="flex gap-x-4 items-center">
+              <img src="@/assets/icons/tower.svg" alt="" />
+              <p class="text-xs text-grey-light font-medium capitalize">
+                04 bedroom
+              </p>
 
-            <div class="grid grid-flow-col gap-1 auto-cols-auto text-white">
-              <span class="text-white text-sm">02</span>
-              <img src="@/assets/icons/toilet.svg" alt="" />
+              <p class="text-xs text-grey-light font-medium capitalize">
+                04 bathroom
+              </p>
+              <p class="text-xs text-grey-light font-medium capitalize">
+                02 livingroom
+              </p>
             </div>
           </div>
         </div>
@@ -111,7 +72,7 @@
 </template>
 
 <script setup>
-import img from "@/assets/img/profile.png";
+// import img from "@/assets/img/profile.png";
 import house from "@/assets/img/house.jpg";
 import { IonPage, IonContent, IonHeader } from "@ionic/vue";
 import { ref } from "vue";

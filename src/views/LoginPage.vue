@@ -182,7 +182,6 @@ const step = ref(1);
   background-image: url("../assets/img/map.png");
   background-size: cover;
   background-position: center;
-  opacity: 0.8; /* Adjust the opacity as desired */
   z-index: -5;
 }
 .backdrop::before {
@@ -193,7 +192,7 @@ const step = ref(1);
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(29, 53, 72, 0.8);
 }
 
 input::placeholder {
