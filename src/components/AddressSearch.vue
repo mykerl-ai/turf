@@ -38,8 +38,11 @@ export default {
   },
   methods: {
     setPlace(e) {
-      console.log(e);
-      this.$emit("update", e.formatted_address);
+      const position = {
+        latitude: e.geometry.location.lat(),
+        longitude: e.geometry.location.lng(),
+      };
+      this.$emit("update", position);
     },
   },
 };

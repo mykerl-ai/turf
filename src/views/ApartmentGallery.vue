@@ -15,7 +15,10 @@
           <div
             class="grid grid-flow-col justify-around auto-cols-auto mb-12 gap-3 w-full overflow-x-scroll"
           >
-            <div v-for="(data, index) in swiperData" :key="index">
+            <div
+              v-for="(data, index) in getProperty.homeDetails[0].fileUrl"
+              :key="index"
+            >
               <!-- <div class="slide"></div> -->
               <div
                 @click="setActive(index)"
@@ -25,7 +28,7 @@
                     : 'my-0 w-28 h-28'
                 "
                 :style="{
-                  backgroundImage: 'url(' + data.image + ')',
+                  backgroundImage: 'url(' + data + ')',
                 }"
                 class="slide-content stack cursor-pointer border-2 border-primary no-repeat shrinkImg rounded-2xl p-3"
               ></div>
@@ -41,66 +44,39 @@
 import { IonPage, IonContent } from "@ionic/vue";
 import BackButton from "@/components/BackButton.vue";
 
-import { ref } from "vue";
-
+import { useDataStore } from "@/stores/data.js";
+import { useRoute } from "vue-router";
+import { computed, onMounted, ref } from "vue";
 // import img2 from "@/assets/img/gallery-image.png";
-import img from "@/assets/img/gallery-image.png";
-import house from "@/assets/img/house.jpg";
-import house1 from "@/assets/img/house1.jpg";
-import house2 from "@/assets/img/house2.jpg";
-import house3 from "@/assets/img/house3.jpg";
-import house4 from "@/assets/img/house1.jpg";
-import house5 from "@/assets/img/house2.jpg";
-import house6 from "@/assets/img/house3.jpg";
-import house7 from "@/assets/img/house1.jpg";
-import house8 from "@/assets/img/house3.jpg";
-// import map from "@/assets/img/map.png";
 
+// import map from "@/assets/img/map.png";
+const store = useDataStore();
+const route = useRoute();
+
+const { query } = store;
+
+const getProperty = computed(() => store.getSingleProperty);
+
+async function queryProperty() {
+  await query({
+    endpoint: "ViewProperty",
+    payload: { viewPropertyId: route.params.id },
+    service: "GENERAL",
+    storeKey: "singleProperty",
+  });
+}
+
+onMounted(async () => {
+  await queryProperty();
+});
 const activeIndex = ref(1);
 const activeImg = ref(null);
 
-const swiperData = ref([
-  {
-    image: house,
-  },
-  {
-    image: house1,
-  },
-  {
-    image: house2,
-  },
-  {
-    image: house3,
-  },
-  {
-    image: img,
-  },
-  {
-    image: house4,
-  },
-  {
-    image: house5,
-  },
-  {
-    image: house6,
-  },
-
-  {
-    image: house7,
-  },
-  {
-    image: house8,
-  },
-
-  // {
-  //   image: map,
-  // },
-]);
-activeImg.value = swiperData.value[0].image;
+activeImg.value = getProperty.value.homeDetails[0].fileUrl[0];
 
 const setActive = (num) => {
   activeIndex.value = num;
-  activeImg.value = swiperData.value[num].image;
+  activeImg.value = getProperty.value.homeDetails[0].fileUrl[num];
 };
 </script>
 

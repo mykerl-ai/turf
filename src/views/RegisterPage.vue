@@ -36,43 +36,47 @@
           </p>
           <!-- step one -->
           <div v-if="step === 1" class="w-full">
-            <div
+            <form
+              @submit.prevent="step = 2"
               class="mt-40 grid grid-flow-row ml-3 items-center gap-6 auto-rows-auto w-full"
             >
               <input
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
                 type="text"
                 placeholder="Username"
+                v-model="args.username"
+                required
               />
 
               <input
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
                 type="password"
                 placeholder="Password"
+                v-model="args.password"
+                required
               />
-            </div>
 
-            <div
-              class="grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
-            >
-              <img
-                @click="step = 2"
-                class="self-center justify-self-center"
-                src="@/assets/icons/register-arrow.svg"
-                alt=""
-              />
-              <svg
-                class="ml-2"
-                width="29"
-                height="6"
-                viewBox="0 0 29 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              <button
+                class="bg-none focus:outline-none w-full grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
               >
-                <rect width="19" height="6" rx="3" fill="white" />
-                <circle cx="26" cy="3" r="3" fill="#D1643A" />
-              </svg>
-            </div>
+                <img
+                  class="self-center justify-self-center"
+                  src="@/assets/icons/register-arrow.svg"
+                  alt=""
+                />
+                <svg
+                  class="ml-2"
+                  width="29"
+                  height="6"
+                  viewBox="0 0 29 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect width="19" height="6" rx="3" fill="white" />
+                  <circle cx="26" cy="3" r="3" fill="#D1643A" />
+                </svg>
+              </button>
+            </form>
 
             <div class="mt-10">
               <div class="text-sm font-medium text-center text-white">
@@ -98,7 +102,7 @@
 
           <!-- step two -->
 
-          <div v-else class="w-full">
+          <form @submit.prevent="registerCustomer" v-else class="w-full">
             <div
               class="mt-28 grid grid-flow-row ml-3 items-center gap-9 auto-rows-auto w-full"
             >
@@ -134,27 +138,29 @@
                 @change="previewFiles($event)"
                 type="file"
                 class="custom-file-input"
+                multiple
               />
 
               <input
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
                 type="email"
                 placeholder="Email"
+                v-model="args.email"
               />
 
               <div class="relative">
                 <span
-                  v-if="!dateInput.length && hideText == false"
+                  v-if="!args.dob.length && hideText == false"
                   class="absolute top-3 text-white font-medium"
                 >
                   Date of Birth</span
                 >
                 <input
                   @focus="hideText = true"
-                  :class="dateInput.length ? 'text-white' : 'text-transparent'"
+                  :class="args.dob.length ? 'text-white' : 'text-transparent'"
                   class="bg-none hidden-placeholder focus:outline-none p-2 border-b-2 bg-transparent w-11/12 font-medium border-primary"
                   type="date"
-                  v-model="dateInput"
+                  v-model="args.dob"
                 />
               </div>
 
@@ -162,17 +168,19 @@
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
                 type="text"
                 placeholder="State"
+                v-model="args.state"
               />
 
               <input
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
                 type="text"
                 placeholder="Address"
+                v-model="args.address"
               />
             </div>
 
-            <div
-              class="grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
+            <button
+              class="bg-none focus:outline-none grid grid-flow-row auto-rows-auto gap-8 mt-4 w-full self-center justify-center"
             >
               <img
                 @click="step = 2"
@@ -191,7 +199,7 @@
                 <rect width="19" height="6" rx="3" fill="white" />
                 <circle cx="26" cy="3" r="3" fill="#D1643A" />
               </svg>
-            </div>
+            </button>
 
             <div class="mt-10">
               <div class="text-sm font-medium text-center text-white">
@@ -212,12 +220,13 @@
                 </div>
               </div>
             </div>
-          </div>
+          </form>
 
           <!-- step two -->
         </div>
       </div>
     </ion-content>
+    <TurfLoader v-if="loading" />
   </ion-page>
 </template>
 
@@ -225,7 +234,21 @@
 import { IonPage, IonContent } from "@ionic/vue";
 import TurfButton from "@/components/TurfButton.vue";
 import avatar from "@/assets/img/avatar.png";
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, defineExpose, defineProps } from "vue";
+import { helperFunctions } from "@/composable/HelperFunctions";
+import { useToast } from "vue-toastification";
+
+import { useDataStore } from "@/stores/data.js";
+import { useRouter } from "vue-router";
+import { Preferences } from "@capacitor/preferences";
+// import { useToast } from "vue-toastification";
+
+const store = useDataStore();
+const router = useRouter();
+const toast = useToast();
+
+const { mutate } = store;
+const { uploadFileToServer, convertFileToBase64 } = helperFunctions;
 
 const props = defineProps({
   allowedTypes: {
@@ -236,16 +259,27 @@ console.log(props);
 const step = ref(1);
 const hide = ref(true);
 const hideText = ref(false);
-const emit = defineEmits(["fileUrl"]);
+// const emit = defineEmits(["fileUrl"]);
 
-let message = ref("");
-let fileName = ref("");
-let fileSize = ref("");
-let url = ref("");
-let error = ref(false);
+const args = ref({
+  address: "",
+  dob: "",
+  email: "",
+  password: "",
+  profileImage: "",
+  state: "",
+  username: "",
+});
+
+const message = ref("");
+const fileName = ref("");
+const fileSize = ref("");
+const url = ref("");
+const error = ref(false);
+const loading = ref(false);
 const inputFile = ref(null);
 const input = ref(null);
-const dateInput = ref("");
+// const dateInput = ref("");
 const uploadFile = ref(null);
 
 defineExpose({ input });
@@ -316,58 +350,65 @@ function formatBytes(bytes, decimals = 2) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
 
-function previewFiles(e) {
+async function previewFiles(e) {
   //   console.log(e.target.files[0], "FILE TARGET");
   error.value = false;
-  uploadFile.value = null;
+  uploadFile.value = [];
   message.value = "";
-  const file = e.target.files[0];
-  inputFile.value = file;
-  uploadFile.value = file;
-  console.log(file.type, "TYPEOFFILE");
-
-  console.log(file.type);
-
-  try {
-    if (!allowedTypes.value.includes(file.type)) {
-      message.value = "File type is wrong!!";
-      inputFile.value = null;
-      error.value = true;
-      throw new Error(message.value);
-    }
-
-    if (file.size > parseInt(props.size)) {
-      console.log(
-        `Too large, max size allowed is ${parseInt(props.size) / 1000000}MB`
-      );
-      message.value = `Too large, max size allowed is ${
-        parseInt(props.size) / 1000000
-      }MB`;
-      inputFile.value = null;
-      error.value = true;
-      // showToast(message.value)
-      throw new Error(message.value);
-    }
-
+  const files = e.target.files;
+  inputFile.value = files;
+  // uploadFile.value = e.target.files;
+  for (let file of files) {
     const { name, size } = file;
     fileName.value = name;
 
     fileSize.value = formatBytes(size);
-    let reader = new FileReader();
-
-    reader.onloadend = (e) => {
-      // data url
-      url.value = e.target.result;
-      // args.documentUrl = e.target.result;
-    };
-    reader.readAsDataURL(file);
-    emit("fileUrl", uploadFile.value);
-  } catch (e) {
-    // showToast(e.message);
+    const base64 = await convertFileToBase64(file);
+    uploadFile.value.push(base64);
   }
+  let reader = new FileReader();
 
-  // url = URL.createObjectURL(file);
-  // uploadToServer();
+  reader.onloadend = (e) => {
+    // data url
+    url.value = e.target.result;
+  };
+  reader.readAsDataURL(files[0]);
+}
+
+async function registerCustomer() {
+  try {
+    // if (isValidBase64(url.value)) {
+    //   toast.success("Valid file");
+    // } else {
+    //   toast.error("Bad type");
+    //   throw new Error("Wrong file type");
+    // }
+    loading.value = true;
+
+    if (uploadFile.value && uploadFile.value.length) {
+      const txt = await uploadFileToServer([...uploadFile.value]);
+      args.value.profileImage = txt[0];
+    }
+
+    let res = await mutate({
+      endpoint: "Signup",
+      data: {
+        input: args.value,
+      },
+      // service: "EMP",
+    });
+    console.log(res, "reso");
+    if (res && res.token) {
+      toast.success("Sign up successful");
+      await Preferences.set({ key: "token", value: res.token });
+      router.push({ name: "Home" });
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error(e.message);
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 

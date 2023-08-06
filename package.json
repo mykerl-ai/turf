@@ -12,23 +12,33 @@
     "merge": "git merge --strategy=recursive"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@capacitor/android": "5.0.4",
     "@capacitor/app": "5.0.2",
     "@capacitor/core": "5.0.4",
     "@capacitor/haptics": "5.0.2",
     "@capacitor/ios": "5.0.4",
     "@capacitor/keyboard": "5.0.2",
+    "@capacitor/preferences": "^5.0.6",
     "@capacitor/splash-screen": "^5.0.2",
     "@capacitor/status-bar": "5.0.2",
     "@fawmi/vue-google-maps": "^0.9.79",
     "@ionic/vue": "^7.0.12",
     "@ionic/vue-router": "^7.0.12",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "@vue/apollo-option": "^4.0.0-alpha.20",
+    "axios": "^1.4.0",
     "core-js": "^3.6.5",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "ionicons": "^7.0.0",
+    "javascript-time-ago": "^2.5.9",
+    "pinia": "^2.0.22",
+    "pinia-plugin-persistedstate": "^2.2.0",
     "swiper": "^9.3.2",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@capacitor/cli": "5.0.4",
@@ -40,6 +50,7 @@
     "@vue/cli-service": "~5.0.0-rc.1",
     "@vue/test-utils": "^2.0.0-rc.16",
     "@vue/vue3-jest": "^27.0.0-alpha.3",
+    "autoprefixer": "^10.4.13",
     "babel-jest": "^27.3.1",
     "cypress": "^8.7.0",
     "eslint": "^8.4.1",
@@ -49,5 +60,5 @@
     "tailwindcss": "^3.2.7",
     "ts-jest": "^27.0.7"
   },
-  "description": "An Ionic project"
+  "description": "Turf"
 }

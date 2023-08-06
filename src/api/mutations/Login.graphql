@@ -1,0 +1,7 @@
+mutation Login($input: LoginCustomerInput) {
+  Login(input: $input) {
+    token
+    user
+    accountType
+  }
+}

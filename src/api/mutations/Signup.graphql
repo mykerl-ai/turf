@@ -1,0 +1,7 @@
+mutation Signup($input: SignupCustomerInput) {
+  Signup(input: $input) {
+    token
+    user
+    accountType
+  }
+}

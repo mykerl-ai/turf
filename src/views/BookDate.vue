@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-header>
-      <div class="grid grid-cols-2 p-4 items-center w-full my-2">
+      <div class="grid grid-cols-2 pt-4 pb-2 px-4 items-center w-full my-2">
         <BackButton />
 
         <div
@@ -12,13 +12,15 @@
       </div>
     </ion-header>
     <ion-content class="ion-padding">
-      <AddressSearch />
+      <AddressSearch @update="queryByPosition" />
 
       <div
+        v-for="home in listOfHouses"
+        :key="home._id"
         @click="
           $router.push({
             name: 'ViewApartment',
-            params: { id: swiperData[0].name },
+            params: { id: home._id },
           })
         "
         class="cursor-pointer relative my-8"
@@ -26,7 +28,10 @@
         <!-- <div class="slide"></div> -->
         <div
           :style="{
-            backgroundImage: 'url(' + house + ')',
+            backgroundImage:
+              home && home.fileUrl && home.fileUrl.length
+                ? 'url(' + home.fileUrl[0] + ')'
+                : 'url(' + house + ')',
           }"
           class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 no-repeat items-end items-self-end self-end rounded-2xl"
         ></div>
@@ -41,33 +46,47 @@
               <h2
                 class="mt-0 mb-1 text-secondary text-lg font-medium capitalize"
               >
-                {{ swiperData[0].name }}
+                {{ home.houseType || "N/A" }}
               </h2>
 
               <h2
                 class="mt-0 mb-1 text-secondary text-lg font-medium capitalize"
               >
-                {{ swiperData[0].price }}
+                {{ formatAmount(home.price) }}
               </h2>
             </div>
 
             <div class="flex gap-x-4 items-center">
               <img src="@/assets/icons/tower.svg" alt="" />
               <p class="text-xs text-grey-light font-medium capitalize">
-                04 bedroom
+                {{ home.bedRoom && home.bedRoom.padStart(2, "0") }}
+                {{
+                  home.bedRoom && Number(home.bedRoom) > 1
+                    ? "bedrooms"
+                    : "bedroom"
+                }}
               </p>
 
               <p class="text-xs text-grey-light font-medium capitalize">
-                04 bathroom
+                {{ home.bathRoom && home.bathRoom.padStart(2, "0") }}
+                {{
+                  home.bathRoom && Number(home.bathRoom) > 1
+                    ? "bathrooms"
+                    : "bathroom"
+                }}
               </p>
               <p class="text-xs text-grey-light font-medium capitalize">
-                02 livingroom
+                {{ home.toilet && home.toilet.padStart(2, "0") }}
+                {{
+                  home.toilet && Number(home.toilet) > 1 ? "toilets" : "toilet"
+                }}
               </p>
             </div>
           </div>
         </div>
       </div>
     </ion-content>
+    <TurfLoader v-if="loading" />
   </ion-page>
 </template>
 
@@ -75,31 +94,73 @@
 // import img from "@/assets/img/profile.png";
 import house from "@/assets/img/house.jpg";
 import { IonPage, IonContent, IonHeader } from "@ionic/vue";
-import { ref } from "vue";
-
+import { useDataStore } from "@/stores/data.js";
+// import { useRoute } from "vue-router";
+import { computed, onMounted, ref } from "vue";
 import BackButton from "@/components/BackButton.vue";
 // import TurfSearch from "@/components/TurfSearch.vue";
 import AddressSearch from "@/components/AddressSearch.vue";
+import { helperFunctions } from "@/composable/HelperFunctions";
 
-const swiperData = ref([
-  {
-    name: "alexis avenue",
-    street: "278 Macathy street",
-    price: "$1,800",
-    tenure: "month",
-  },
-  {
-    name: "Dremy avenue",
-    street: "12 Dorian street",
-    price: "$3,600",
-    tenure: "year",
-  },
-]);
+const store = useDataStore();
+// const route = useRoute();
 
-// const currentIndex = ref(0);
-// const onSlideChange = (e) => {
-//   console.log(e, currentIndex);
-// };
+const { query } = store;
+
+const { formatAmount } = helperFunctions;
+const listOfHouses = computed(() => store.getAllHouses);
+
+// async function queryHouses() {
+//   await query({
+//     endpoint: "FetchAllProperties",
+//     payload: {},
+//     service: "GENERAL",
+//     storeKey: "allHouses",
+//   });
+// }
+const loading = ref(false);
+const payload = ref({
+  position: { latitude: 0, longitude: 0 },
+  sort: { price: "DESC", date: "DESC" },
+  filter: { min: 0, max: 0 },
+});
+async function queryByPosition(position) {
+  if (position) {
+    payload.value.position = position;
+  }
+
+  try {
+    loading.value = true;
+    await query({
+      endpoint: "FetchPropertyByDistance",
+      payload: payload.value,
+      service: "GENERAL",
+      storeKey: "allHouses",
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    loading.value = false;
+  }
+}
+// const extractedHomeDetails = computed(() => {
+//   const data = listOfHouses.value
+//     .map((house) => {
+//       const houseType = house.houseType;
+//       const address = house.address;
+//       return house.homeDetails.map((homeDetail) => ({
+//         ...homeDetail,
+//         houseType,
+//         address,
+//       }));
+//     })
+//     .flat();
+//   return data;
+// });
+onMounted(async () => {
+  await queryByPosition();
+  // await queryHouses();
+});
 </script>
 
 <style scoped>

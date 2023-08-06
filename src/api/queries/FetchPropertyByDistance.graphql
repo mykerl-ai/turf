@@ -1,0 +1,27 @@
+query FetchPropertyByDistance(
+  $position: Position
+  $filter: Filter
+  $sort: Sort
+) {
+  FetchPropertyByDistance(position: $position, filter: $filter, sort: $sort) {
+    _id
+    agentId
+    bedRoom
+    toilet
+    bathRoom
+    description
+    rules
+    requirement
+    fileUrl
+    paymentType
+    statusType
+    price
+    username
+    address
+    position {
+      latitude
+      longitude
+    }
+    houseType
+  }
+}

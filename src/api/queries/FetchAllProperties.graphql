@@ -1,0 +1,24 @@
+query FetchAllProperties {
+  FetchAllProperties {
+    _id
+    agentId
+    username
+    address
+    position
+    homeDetails {
+      _id
+      agentId
+      bedRoom
+      toilet
+      bathRoom
+      description
+      rules
+      requirement
+      fileUrl
+      paymentType
+      statusType
+      price
+    }
+    houseType
+  }
+}

@@ -1,0 +1,11 @@
+query FetchUser {
+  FetchUser {
+    _id
+    username
+    profileImage
+    email
+    dob
+    state
+    address
+  }
+}

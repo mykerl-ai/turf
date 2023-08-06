@@ -7,7 +7,7 @@
       </ion-header> -->
     <ion-content :fullscreen="true">
       <!-- <ion-backdrop class="backdrop h-screen"></ion-backdrop> -->
-      <div
+      <!-- <div
         v-show="step != 1"
         @click="step = 1"
         class="absolute top-16 right-9"
@@ -25,13 +25,13 @@
             fill="white"
           />
         </svg>
-      </div>
+      </div> -->
       <div class="backdrop relative">
         <div
           style="z-index: 999"
           class="z-40 overflow-hidden absolute w-full h-screen"
         >
-          <p class="w-full text-white text-3xl mt-32 ml-12 capitalize">
+          <p class="w-full text-white text-3xl mt-10 ml-12 capitalize">
             <span class="browse-font text-6xl font-medium text-primary">b</span
             ><span class="browse-font text-white">rowse</span> <br />
             <span class="text-white font-medium">
@@ -40,22 +40,34 @@
             >
           </p>
           <!-- step one -->
-          <div v-if="step === 1" class="w-full">
-            <div
-              class="mt-40 mb-8 ml-8 grid grid-flow-col gap-0 auto-cols-auto w-full"
+          <div class="w-full">
+            <form
+              @submit.prevent="loginCustomer"
+              class="mt-40 mb-8 ml-2 grid grid-flow-row gap-4 auto-rows-auto w-full"
             >
               <input
-                class="p-2 bg-none focus:outline-none border-b-2 bg-transparent w-full text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="text"
-                placeholder="Start Your Journey With Us Today "
+                class="p-2 bg-none focus:outline-none border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="email"
+                placeholder="Email"
+                v-model="args.email"
               />
-              <img
-                @click="step = 2"
-                class="border-b-2 border-primary pl-7"
-                src="@/assets/icons/register-arrow.svg"
-                alt=""
+
+              <input
+                class="p-2 bg-none focus:outline-none border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="password"
+                placeholder="Password"
+                v-model="args.password"
               />
-            </div>
+              <button
+                class="bg-none focus:outline-none w-full grid grid-flow-row auto-rows-auto gap-8 mt-4 justify-center"
+              >
+                <img
+                  class="border-primary"
+                  src="@/assets/icons/register-arrow.svg"
+                  alt=""
+                />
+              </button>
+            </form>
 
             <div class="grid justify-center">
               <svg
@@ -73,7 +85,7 @@
               >Forgot Password?</TurfButton
             >
 
-            <div class="mt-32">
+            <div class="mt-20">
               <div class="text-sm font-medium text-center text-white">
                 Don't have an account?
                 <span class="text-primary">Click below</span>
@@ -97,8 +109,8 @@
 
           <!-- step two -->
 
-          <div v-else class="w-full">
-            <div
+          <div class="w-full">
+            <!-- <div
               class="mt-40 mb-8 ml-8 grid grid-flow-col gap-0 auto-cols-auto w-full"
             >
               <input
@@ -111,9 +123,9 @@
                 src="@/assets/icons/register-arrow.svg"
                 alt=""
               />
-            </div>
+            </div> -->
 
-            <div class="grid justify-center">
+            <!-- <div class="grid justify-center">
               <svg
                 width="29"
                 height="6"
@@ -138,9 +150,9 @@
                   fill="#D1643A"
                 />
               </svg>
-            </div>
+            </div> -->
 
-            <div class="mt-60">
+            <!-- <div class="mt-60">
               <div class="grid w-full px-4 mt-5 items-center">
                 <div class="border-2 border-primary p-2 w-full rounded-2xl">
                   <TurfButton
@@ -153,7 +165,7 @@
                   >
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <!-- step two -->
@@ -167,8 +179,47 @@
 import { IonPage, IonContent } from "@ionic/vue";
 import TurfButton from "@/components/TurfButton.vue";
 import { ref } from "vue";
+import { useToast } from "vue-toastification";
 
-const step = ref(1);
+import { useDataStore } from "@/stores/data.js";
+import { useRouter } from "vue-router";
+import { Preferences } from "@capacitor/preferences";
+
+const store = useDataStore();
+const router = useRouter();
+const toast = useToast();
+
+const { mutate } = store;
+
+const loading = ref(false);
+const args = ref({
+  email: "",
+  password: "",
+});
+
+async function loginCustomer() {
+  try {
+    loading.value = true;
+
+    let res = await mutate({
+      endpoint: "Login",
+      data: {
+        input: args.value,
+      },
+      service: "GENERAL",
+    });
+    if (res && res.token) {
+      toast.success("Login successful");
+      await Preferences.set({ key: "token", value: res.token });
+      router.push({ name: "Home" });
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error(e.message);
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
 
 <style scoped>
