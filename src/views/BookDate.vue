@@ -82,6 +82,9 @@
                 }}
               </p>
             </div>
+            <p class="text-xs text-grey-light font-medium capitalize">
+              {{ home.address }}
+            </p>
           </div>
         </div>
       </div>

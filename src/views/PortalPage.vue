@@ -12,14 +12,28 @@
         >
           <div class="h-full grid grid-flow-col auto-cols-auto gap-3">
             <div
+              v-if="
+                getUser && getUser.profileImage && getUser.profileImage.length
+              "
+              :style="{
+                backgroundImage: 'url(' + getUser.profileImage + ')',
+              }"
+              class="w-16 h-16 bg-contain rounded-full"
+            ></div>
+            <div
+              v-else
               :style="{
                 backgroundImage: 'url(' + img + ')',
               }"
               class="w-16 h-16 bg-contain rounded-full"
             ></div>
             <div class="w-full mt-2">
-              <span class="text-white w-full mt-3">Andrew Williams</span>
-              <div class="text-grey-light text-sm">Caliy@gmail.com</div>
+              <span class="capitalize text-white w-full mt-3">
+                {{ getUser && getUser.username }}</span
+              >
+              <div class="text-grey-light text-sm">
+                {{ getUser && getUser.email }}
+              </div>
             </div>
           </div>
           <div
@@ -168,9 +182,10 @@
 import img from "@/assets/img/profile.png";
 import house from "@/assets/img/house.jpg";
 import { Pagination } from "swiper";
+import { useDataStore } from "@/stores/data.js";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -181,10 +196,37 @@ import driver from "@/assets/img/driver.png";
 
 import BackButton from "@/components/BackButton.vue";
 
+const store = useDataStore();
+// const router = useRouter();
+
+const { query } = store;
+
 const slides = ref({});
 const modules = ref([Pagination]);
+
+const getUser = computed(() => store.getUserData);
+
+async function queryUser() {
+  try {
+    await query({
+      endpoint: "FetchUser",
+      payload: {},
+      service: "GENERAL",
+      storeKey: "userData",
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    loading.value = false;
+  }
+}
+const loading = ref(false);
 
 const setSwiperInstance = (swiper) => {
   slides.value = swiper;
 };
+
+onMounted(async () => {
+  await queryUser();
+});
 </script>
