@@ -1,0 +1,31 @@
+query GetInspectionDetailsByClientId {
+  GetInspectionDetailsByClientId {
+    _id
+    booked {
+      _id
+      status
+      createdAt
+      updatedAt
+    }
+    house {
+      _id
+      agentId
+      bedRoom
+      toilet
+      bathRoom
+      description
+      rules
+      requirement
+      fileUrl
+      paymentType
+      statusType
+      price
+    }
+    client
+    date
+    time
+    closeTime
+    createdAt
+    updatedAt
+  }
+}

@@ -140,6 +140,7 @@ async function queryByPosition(position) {
       service: "GENERAL",
       storeKey: "allHouses",
     });
+    console.log(listOfHouses.value, "CHeck house");
   } catch (e) {
     console.log(e);
   } finally {

@@ -122,54 +122,9 @@
             </div>
           </swiper-slide>
           <!-- second  -->
-          <swiper-slide @click="$router.push({ name: 'Schedule' })">
-            <div
-              class="h-64 relative text-left w-64 bg-secondary rounded-2xl p-3"
-            >
-              <div class="w-full grid grid-row gap-5">
-                <span class="text-sm text-white">
-                  Pick a Date: <span class="text-primary">14th mar 23</span>
-                </span>
-
-                <div
-                  :style="{
-                    backgroundImage: 'url(' + driver + ')',
-                  }"
-                  class="h-20 bg-no-repeat bg-cover rounded-tl-3xl rounded-br-3xl w-full bg-black"
-                ></div>
-
-                <div class="w-full flex items-center gap-4">
-                  <div class="h-16 w-16 bg-black rounded-full"></div>
-                  <div
-                    class="grid grid-row h-10 flex justify-center items-center"
-                  >
-                    <span class="text-sm font-medium text-white"
-                      >Mr Mick Ano</span
-                    >
-                    <span class="text-xs font-medium text-white"
-                      >Position:Tour guide</span
-                    >
-                  </div>
-                </div>
-
-                <!-- <div
-                  @click.self="
-                    $router.push({
-                      name: 'CreateSchedule',
-                      params: { id: 'new' },
-                    })
-                  "
-                  class="z-10 bg-primary p-2 text-center text-white self-end absolute bottom-2 text-xs left-36 rounded-3xl mt-2 w-24"
-                >
-                  Reschedule
-                </div> -->
-
-                <!-- <div class="w-full mb-4">
-              <button class="h-9 w-28 bg-white rounded-2xl">
-                <p class="text-stone-600 text-sm font-medium">Pay Now</p>
-              </button>
-            </div> -->
-              </div>
+          <swiper-slide v-for="data in inspectionArray" :key="data._id">
+            <div class="w-full">
+              <ScheduleDetails :data="data" />
             </div>
           </swiper-slide>
         </swiper>
@@ -186,13 +141,14 @@ import { useDataStore } from "@/stores/data.js";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { computed, onMounted, ref } from "vue";
+import ScheduleDetails from "@/components/ScheduleDetails.vue";
 
 import "swiper/css";
 import "swiper/css/pagination";
 
 import "@ionic/vue/css/ionic-swiper.css";
 import { IonHeader, IonPage, IonContent } from "@ionic/vue";
-import driver from "@/assets/img/driver.png";
+// import driver from "@/assets/img/driver.png";
 
 import BackButton from "@/components/BackButton.vue";
 
@@ -205,6 +161,7 @@ const slides = ref({});
 const modules = ref([Pagination]);
 
 const getUser = computed(() => store.getUserData);
+const inspectionArray = computed(() => store.getClientInspectionDetails);
 
 async function queryUser() {
   try {
@@ -226,7 +183,21 @@ const setSwiperInstance = (swiper) => {
   slides.value = swiper;
 };
 
+async function queryInspectionDetails() {
+  try {
+    await query({
+      endpoint: "GetInspectionDetailsByClientId",
+      payload: {},
+      service: "GENERAL",
+      storeKey: "clientInspectionDetails",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 onMounted(async () => {
   await queryUser();
+  await queryInspectionDetails();
 });
 </script>

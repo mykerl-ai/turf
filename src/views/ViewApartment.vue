@@ -1,5 +1,9 @@
 <template>
-  <ion-page>
+  <ion-page
+    v-if="
+      getProperty && getProperty.homeDetails && getProperty.homeDetails.length
+    "
+  >
     <ion-header>
       <div class="grid grid-cols-2 p-4 items-center w-full mb-1 mt-2">
         <BackButton />
@@ -44,7 +48,7 @@
               :style="{
                 backgroundImage: 'url(' + data + ')',
               }"
-              class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-80 no-repeat items-end items-self-end self-end rounded-2xl p-3"
+              class="slide-content grid grid-flow-row gap-0 auto-rows-auto w-full h-72 no-repeat items-end items-self-end self-end rounded-2xl p-3"
             >
               <!-- <div class="z-10 text-left">
                 <p class="capitalize text-left font-bold text-white w-full">
@@ -160,14 +164,56 @@
             >
           </div> -->
           <TurfButton
+            v-if="bookingDetails && !bookingDetails.house"
+            @click="createAppointment"
             class="col-span-3 w-full my-4"
             :block="true"
             shape="round"
             color="primary"
             ><span class="text-white text-base font-medium capitalize">
-              Schedule a viewing</span
+              Book an Appointment</span
             >
           </TurfButton>
+
+          <span
+            v-else-if="bookingDetails && bookingDetails.status === 'PENDING'"
+            class="mt-2 col-span-3 font-medium text-center text-primary text-xs"
+            >We are in the process of verifying your appointment. Kindly check
+            back shortly. For urgent concerns, feel free to reach out to
+            support.</span
+          >
+          <div
+            v-else-if="bookingDetails && bookingDetails.status === 'APPROVED'"
+            class="w-full col-span-3"
+          >
+            <div
+              class="w-full"
+              v-if="
+                inspectionDetails &&
+                Object.keys(inspectionDetails).length &&
+                inspectionDetails._id
+              "
+            >
+              <ScheduleDetails :data="inspectionDetails" />
+            </div>
+            <div v-else>
+              <CalendarWidget
+                :takenDate="unavailableDates"
+                @update="selectedDate = $event"
+              />
+              <TurfButton
+                @click="scheduleDate"
+                class="col-span-3 w-full my-4"
+                :block="true"
+                shape="round"
+                color="secondary"
+                ><span class="text-white text-base font-medium capitalize">
+                  Schedule</span
+                >
+              </TurfButton>
+            </div>
+          </div>
+
           <button
             class="hidden col-span-1 shadow-2xl bg-primary justify-self-end focus:outline-none w-12 h-12 rounded-xl p-1"
           >
@@ -234,6 +280,10 @@ import { useRoute } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 import BackButton from "@/components/BackButton.vue";
 import TurfButton from "@/components/TurfButton.vue";
+import { useToast } from "vue-toastification";
+import CalendarWidget from "@/components/CalendarWidget.vue";
+import ScheduleDetails from "@/components/ScheduleDetails.vue";
+
 // import house from "@/assets/img/house.jpg";
 import img from "@/assets/img/profile.png";
 
@@ -255,8 +305,9 @@ import "@ionic/vue/css/ionic-swiper.css";
 
 const store = useDataStore();
 const route = useRoute();
+const toast = useToast();
 
-const { query } = store;
+const { query, mutate } = store;
 const { formatAmount } = helperFunctions;
 
 const slides = ref({});
@@ -275,6 +326,9 @@ const paymentDuration = ref({
 //   console.log(e, currentIndex);
 // };
 const getProperty = computed(() => store.getSingleProperty);
+const bookingDetails = computed(() => store.getAppointmentDetails);
+const inspectionDetails = computed(() => store.getInspectionDetails);
+const unavailableDates = computed(() => store.getTakenDates);
 
 async function queryProperty() {
   try {
@@ -291,9 +345,133 @@ async function queryProperty() {
     loading.value = false;
   }
 }
+const args = ref({
+  status: "PENDING",
+  house: "",
+});
+const houseId = route.params.id;
+async function queryAppointment() {
+  try {
+    loading.value = true;
+    await query({
+      endpoint: "GetBookedAppointmentsByHouseId",
+      payload: { houseId },
+      service: "GENERAL",
+      storeKey: "appointmentDetails",
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    loading.value = false;
+  }
+}
+async function createAppointment() {
+  try {
+    loading.value = true;
+
+    let res = await mutate({
+      endpoint: "CreateAppointment",
+      data: {
+        input: args.value,
+      },
+      service: "GENERAL",
+    });
+    if (res && res._id) {
+      await queryAppointment();
+      toast.success("Booked successfully");
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error(e.message);
+  } finally {
+    loading.value = false;
+  }
+}
+const selectedDate = ref("");
+
+async function scheduleDate() {
+  if (!selectedDate.value || !selectedDate.value.length) {
+    toast.error("You have to pick a date");
+    return;
+  }
+  const dateTime = selectedDate.value.split("T");
+  try {
+    loading.value = true;
+
+    let res = await mutate({
+      endpoint: "CreateScheduleInspectionDate",
+      data: {
+        input: {
+          time: dateTime[1],
+          house: route.params.id,
+          date: dateTime[0],
+          closeTime: "",
+          // client: getUser.value._id,
+          booked: bookingDetails.value._id,
+        },
+      },
+      service: "GENERAL",
+    });
+    if (res && res._id) {
+      await queryInspectionDetails();
+
+      // await queryAppointment();
+      toast.success("Booked successfully");
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error(e.message);
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function queryUser() {
+  try {
+    await query({
+      endpoint: "FetchUser",
+      payload: {},
+      service: "GENERAL",
+      storeKey: "userData",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function queryInspectionDetails() {
+  try {
+    await query({
+      endpoint: "GetInspectionDetailsByHouseId",
+      payload: { houseId },
+      service: "GENERAL",
+      storeKey: "inspectionDetails",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function fetchTakenDates() {
+  try {
+    await query({
+      endpoint: "FetchTakenDates",
+      payload: {},
+      service: "GENERAL",
+      storeKey: "takenDates",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 onMounted(async () => {
+  args.value.house = route.params.id;
+  await queryAppointment();
+  await fetchTakenDates();
   await queryProperty();
+  await queryUser();
+  await queryInspectionDetails();
 });
 
 // };

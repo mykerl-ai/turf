@@ -8,12 +8,20 @@ export const useDataStore = defineStore("main", {
     allHouses: [],
     userData: {},
     singleProperty: {},
+    appointmentDetails: {},
+    inspectionDetails: {},
+    clientInspectionDetails: [],
+    takenDates: [],
   }),
 
   getters: {
     getAllHouses: (state) => state.allHouses,
     getUserData: (state) => state.userData,
     getSingleProperty: (state) => state.singleProperty,
+    getAppointmentDetails: (state) => state.appointmentDetails,
+    getInspectionDetails: (state) => state.inspectionDetails,
+    getClientInspectionDetails: (state) => state.clientInspectionDetails,
+    getTakenDates: (state) => state.takenDates,
   },
 
   actions: {

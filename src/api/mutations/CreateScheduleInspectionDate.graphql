@@ -1,0 +1,11 @@
+mutation CreateScheduleInspectionDate($input: ScheduleInspectionDateInput!) {
+  CreateScheduleInspectionDate(input: $input) {
+    _id
+    booked
+    house
+    client
+    date
+    time
+    closeTime
+  }
+}
