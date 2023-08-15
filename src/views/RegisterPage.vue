@@ -120,6 +120,7 @@
                   background-color: rgba(29, 53, 72, 0.5);
                   background-repeat: no-repeat;
                   background-position: center;
+                  background-size: cover;
                 "
                 class="relative justify-self-center border border-primary w-36 h-36"
               >

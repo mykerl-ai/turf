@@ -82,7 +82,7 @@
         </swiper>
 
         <h2 class="mb-1 mt-2 text-secondary text-2xl font-bold capitalize">
-          {{ getProperty.houseType }}
+          {{ propertyTypes[getProperty.houseType] }}
         </h2>
 
         <p class="text-sm text-grey-light font-medium capitalize">
@@ -320,6 +320,17 @@ const setSwiperInstance = (swiper) => {
 const paymentDuration = ref({
   YEARLY: "Per year",
   MONTHLY: "Per month",
+});
+const propertyTypes = ref({
+  BUNGALOWS: "Bungalows",
+  DUPLEX: "Duplex",
+  TERRACE_DUPLEX: "Terrace Duplex",
+  SEMI_DETACHED_DUPLEX: "Semi-detached Duplex",
+  FULLY_DETACHED_DUPLEX: "Fully-detached Duplex",
+  MANSION: "Mansion",
+  APARTMENT_CONDOS: "Apartment/Condos",
+  MAISONETTE: "Maisonette",
+  PENT_HOUSE: "Pent-house",
 });
 // const currentIndex = ref(0);
 // const onSlideChange = (e) => {

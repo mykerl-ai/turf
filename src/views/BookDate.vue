@@ -44,13 +44,13 @@
               class="grid grid-flow-col gap-0 auto-cols-auto justify-between items-center"
             >
               <h2
-                class="mt-0 mb-1 text-secondary text-lg font-medium capitalize"
+                class="mt-0 mb-1 text-secondary text-base font-medium capitalize"
               >
-                {{ home.houseType || "N/A" }}
+                {{ propertyTypes[home.houseType] || "N/A" }}
               </h2>
 
               <h2
-                class="mt-0 mb-1 text-secondary text-lg font-medium capitalize"
+                class="mt-0 mb-1 text-secondary text-sm font-medium capitalize"
               >
                 {{ formatAmount(home.price) }}
               </h2>
@@ -122,6 +122,17 @@ const listOfHouses = computed(() => store.getAllHouses);
 //   });
 // }
 const loading = ref(false);
+const propertyTypes = ref({
+  BUNGALOWS: "Bungalows",
+  DUPLEX: "Duplex",
+  TERRACE_DUPLEX: "Terrace Duplex",
+  SEMI_DETACHED_DUPLEX: "Semi-detached Duplex",
+  FULLY_DETACHED_DUPLEX: "Fully-detached Duplex",
+  MANSION: "Mansion",
+  APARTMENT_CONDOS: "Apartment/Condos",
+  MAISONETTE: "Maisonette",
+  PENT_HOUSE: "Pent-house",
+});
 const payload = ref({
   position: { latitude: 0, longitude: 0 },
   sort: { price: "DESC", date: "DESC" },

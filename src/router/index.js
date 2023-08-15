@@ -27,6 +27,11 @@ const routes = [
   },
 
   {
+    path: "/edit/profile/:id",
+    name: "EditProfile",
+    component: () => import("@/views/EditProfile.vue"),
+  },
+  {
     path: "/tabs/",
     component: TabsPage,
     children: [

@@ -6,7 +6,12 @@
       </div>
     </ion-header>
     <ion-content class="ion-padding">
-      <div class="w-full items-center bg-secondary rounded-3xl p-4 mb-5">
+      <div
+        @click="
+          $router.push({ name: 'EditProfile', params: { id: getUser._id } })
+        "
+        class="w-full items-center bg-secondary rounded-3xl p-4 mb-5"
+      >
         <div
           class="h-full grid grid-flow-col auto-cols-auto justify-center justify-items-center justify-between w-full"
         >
@@ -18,6 +23,7 @@
               :style="{
                 backgroundImage: 'url(' + getUser.profileImage + ')',
               }"
+              style="background-repeat: no-repeat"
               class="w-16 h-16 bg-contain rounded-full"
             ></div>
             <div

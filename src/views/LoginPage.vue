@@ -172,6 +172,7 @@
         </div>
       </div>
     </ion-content>
+    <TurfLoader v-if="loading" />
   </ion-page>
 </template>
 
