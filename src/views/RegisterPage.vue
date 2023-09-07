@@ -1,28 +1,28 @@
 <template>
   <ion-page>
-    <!-- <ion-header>
+    <ion-header collapse="fade">
       <ion-toolbar>
-        <ion-title>Tab 1</ion-title>
+        <div v-show="step != 1" @click="step = 1" class="relative ml-4">
+          <svg
+            width="33"
+            height="31"
+            viewBox="0 0 33 31"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.4038 26.8221C14.1473 27.7778 14.1473 29.3274 13.4038 30.2832C12.6603 31.2389 11.455 31.2389 10.7115 30.2832L0.557634 17.2304C-0.185881 16.2746 -0.185881 14.7253 0.557634 13.7695L10.7115 0.716839C11.455 -0.238943 12.6603 -0.238943 13.4038 0.716839C14.1473 1.67262 14.1473 3.22197 13.4038 4.17775L6.50018 13.0526L31.0962 13.0526C32.1476 13.0526 33 14.1484 33 15.5C33 16.8516 32.1476 17.9473 31.0962 17.9473L6.50018 17.9473L13.4038 26.8221Z"
+              fill="#D1643A"
+            />
+          </svg>
+        </div>
       </ion-toolbar>
-    </ion-header> -->
-    <ion-content :fullscreen="false">
+    </ion-header>
+    <ion-content :fullscreen="true">
       <!-- <ion-backdrop class="backdrop h-screen"></ion-backdrop> -->
-      <div v-show="step != 1" @click="step = 1" class="absolute top-8 right-9">
-        <svg
-          width="33"
-          height="31"
-          viewBox="0 0 33 31"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.4038 26.8221C14.1473 27.7778 14.1473 29.3274 13.4038 30.2832C12.6603 31.2389 11.455 31.2389 10.7115 30.2832L0.557634 17.2304C-0.185881 16.2746 -0.185881 14.7253 0.557634 13.7695L10.7115 0.716839C11.455 -0.238943 12.6603 -0.238943 13.4038 0.716839C14.1473 1.67262 14.1473 3.22197 13.4038 4.17775L6.50018 13.0526L31.0962 13.0526C32.1476 13.0526 33 14.1484 33 15.5C33 16.8516 32.1476 17.9473 31.0962 17.9473L6.50018 17.9473L13.4038 26.8221Z"
-            fill="white"
-          />
-        </svg>
-      </div>
+
       <div class="backdrop relative">
-        <div class="overflow-hidden absolute w-full h-screen">
+        <div class="overflow-auto absolute w-full h-screen">
           <p
             v-show="step === 1"
             class="w-full text-white text-3xl mt-32 ml-12 capitalize"
@@ -102,9 +102,13 @@
 
           <!-- step two -->
 
-          <form @submit.prevent="registerCustomer" v-else class="w-full">
+          <form
+            @submit.prevent="registerCustomer"
+            v-else
+            class="w-full overflow-auto"
+          >
             <div
-              class="mt-28 grid grid-flow-row ml-3 items-center gap-9 auto-rows-auto w-full"
+              class="mt-28 grid grid-flow-row ml-3 items-center gap-9 auto-rows-auto w-full overflow-auto"
             >
               <div
                 @click="$refs.input.click()"
@@ -122,7 +126,7 @@
                   background-position: center;
                   background-size: cover;
                 "
-                class="relative justify-self-center border border-primary w-36 h-36"
+                class="relative justify-self-center border border-primary w-32 h-32"
               >
                 <img class="w-full h-full" v-if="url" :src="url" alt="" />
                 <img
@@ -178,6 +182,34 @@
                 placeholder="Address"
                 v-model="args.address"
               />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="First Name"
+                v-model="args.firstName"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Last Name"
+                v-model="args.lastName"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Middle Name"
+                v-model="args.middleName"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="number"
+                placeholder="Phone Number"
+                v-model="args.phone"
+              />
             </div>
 
             <button
@@ -232,7 +264,13 @@
 </template>
 
 <script setup>
-import { IonPage, IonContent } from "@ionic/vue";
+import {
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  // IonTitle,
+} from "@ionic/vue";
 import TurfButton from "@/components/TurfButton.vue";
 import avatar from "@/assets/img/avatar.png";
 import { ref, watch, computed, defineExpose, defineProps } from "vue";
@@ -249,7 +287,8 @@ const router = useRouter();
 const toast = useToast();
 
 const { mutate } = store;
-const { uploadFileToServer, convertFileToBase64 } = helperFunctions;
+const { uploadFileToServer, convertFileToBase64, processNumber } =
+  helperFunctions;
 
 const props = defineProps({
   allowedTypes: {
@@ -270,6 +309,10 @@ const args = ref({
   profileImage: "",
   state: "",
   username: "",
+  firstName: "",
+  lastName: "",
+  middleName: "",
+  phone: "",
 });
 
 const message = ref("");
@@ -377,6 +420,8 @@ async function previewFiles(e) {
 }
 
 async function registerCustomer() {
+  args.value.phone = processNumber(String(args.value.phone));
+
   try {
     // if (isValidBase64(url.value)) {
     //   toast.success("Valid file");
@@ -390,7 +435,6 @@ async function registerCustomer() {
       const txt = await uploadFileToServer([...uploadFile.value]);
       args.value.profileImage = txt[0];
     }
-
     let res = await mutate({
       endpoint: "Signup",
       data: {
@@ -398,7 +442,6 @@ async function registerCustomer() {
       },
       // service: "EMP",
     });
-    console.log(res, "reso");
     if (res && res.token) {
       toast.success("Sign up successful");
       await Preferences.set({ key: "token", value: res.token });
