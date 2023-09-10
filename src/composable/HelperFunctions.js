@@ -49,6 +49,7 @@ export const helperFunctions = {
     let formatted = "";
 
     if (phoneNumber) {
+      console.log(phoneNumber);
       let phone = phoneNumber;
       let firstDigit = phone.charAt(0);
       if (firstDigit == "0") {
@@ -311,7 +312,7 @@ export const helperFunctions = {
   async uploadFileToServer(base64Strings) {
     if (base64Strings && base64Strings.length > 0) {
       const operation = "uploadImages";
-      const query = `mutation ${operation}($files: [Base64!]!) {
+      const query = `mutation ${operation}($files: [String!]!) {
         ${operation}(files: $files) 
       }`;
 

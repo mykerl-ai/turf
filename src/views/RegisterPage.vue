@@ -42,9 +42,9 @@
             >
               <input
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="text"
-                placeholder="Username"
-                v-model="args.username"
+                type="email"
+                placeholder="Email"
+                v-model="args.email"
                 required
               />
 
@@ -126,7 +126,7 @@
                   background-position: center;
                   background-size: cover;
                 "
-                class="relative justify-self-center border border-primary w-32 h-32"
+                class="relative justify-self-center border border-primary w-36 h-36"
               >
                 <img class="w-full h-full" v-if="url" :src="url" alt="" />
                 <img
@@ -148,9 +148,38 @@
 
               <input
                 class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="email"
-                placeholder="Email"
-                v-model="args.email"
+                type="text"
+                placeholder="Username"
+                v-model="args.username"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="First Name"
+                v-model="args.firstName"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Last Name"
+                v-model="args.lastName"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Middle Name"
+                v-model="args.middleName"
+              />
+
+              <input
+                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
+                type="text"
+                placeholder="Phone Number"
+                v-model="args.phone"
+                required
               />
 
               <div class="relative">
@@ -181,34 +210,6 @@
                 type="text"
                 placeholder="Address"
                 v-model="args.address"
-              />
-
-              <input
-                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="text"
-                placeholder="First Name"
-                v-model="args.firstName"
-              />
-
-              <input
-                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="text"
-                placeholder="Last Name"
-                v-model="args.lastName"
-              />
-
-              <input
-                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="text"
-                placeholder="Middle Name"
-                v-model="args.middleName"
-              />
-
-              <input
-                class="bg-none focus:outline-none p-2 border-b-2 bg-transparent w-11/12 text-white font-medium border-primary placeholder-text-white::placeholder"
-                type="number"
-                placeholder="Phone Number"
-                v-model="args.phone"
               />
             </div>
 

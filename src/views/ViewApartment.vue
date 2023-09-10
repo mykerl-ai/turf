@@ -259,6 +259,7 @@
           </div>
 
           <TurfButton
+            @click="payNow"
             class="grid justify-end justify-self-end self-end"
             :block="true"
             shape="round"
@@ -473,6 +474,33 @@ async function fetchTakenDates() {
     });
   } catch (e) {
     console.log(e);
+  }
+}
+
+async function payNow() {
+  try {
+    loading.value = true;
+
+    let res = await mutate({
+      endpoint: "MakePayment",
+      data: {
+        input: {
+          houseUnit: houseId,
+          purposeOfPayment: "RENT",
+        },
+      },
+      service: "GENERAL",
+    });
+    if (res) {
+      res.toLowerCase() == "payment initiated"
+        ? toast.success(res)
+        : toast.error(res);
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error(e.message);
+  } finally {
+    loading.value = false;
   }
 }
 

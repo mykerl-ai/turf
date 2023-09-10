@@ -1,0 +1,3 @@
+mutation MakePayment($input: PaymentInput!) {
+  MakePayment(input: $input)
+}
