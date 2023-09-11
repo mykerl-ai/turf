@@ -193,7 +193,7 @@ function getService(link) {
 
 var httplink = new HttpLink({
   // uri: `http://localhost:4000/graphql`,
-  uri: `https://torfserver.onrender.com`,
+  uri: `https://torfserver.onrender.com/graphql`,
 });
 const generalHttpLink = errorLink.concat(httplink);
 
