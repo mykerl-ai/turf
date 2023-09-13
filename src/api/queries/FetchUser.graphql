@@ -10,6 +10,7 @@ query FetchUser {
     address
     createdAt
     updatedAt
+    walletBalance
     paymentDetails {
       accountNumber
       accountName
