@@ -10,7 +10,7 @@
             v-if="
               getUser && getUser.profileImage && getUser.profileImage.length
             "
-            class="w-14 h-14 bg-cover rounded-2xl"
+            class="w-12 h-12 bg-cover rounded-2xl"
             style="background-repeat: no-repeat; background-position: center"
             :style="{
               backgroundImage: 'url(' + getUser.profileImage + ')',
@@ -18,7 +18,7 @@
           ></div>
           <div
             v-else
-            class="w-14 h-14 bg-contain"
+            class="w-12 h-12 bg-contain"
             :style="{
               backgroundImage: 'url(' + img + ')',
             }"
