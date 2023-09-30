@@ -53,31 +53,71 @@
       </div>
 
       <!-- second box  -->
-      <div class="w-full h-44 rounded-3xl bg-secondary flex mb-5">
-        <div
-          :style="{
-            backgroundImage: 'url(' + house + ')',
-          }"
-          class="w-1/2 h-full bg-cover rounded-3xl"
-        ></div>
-        <div class="w-1/2 p-2 h-full pl-5 rounded-3xl">
-          <div class="grid grid-row mb-3 gap-1">
-            <span class="text-white font-medium"> Alexis Avenue</span>
-            <span class="text-white text-xs font-medium"
-              >278 Macathy street</span
+      <div class="mb-4">
+        <swiper
+          @swiper="setSwiperInstance"
+          :slides-per-view="getUser.apartments.length > 1 ? 1.3 : 1"
+          :space-between="5"
+          :modules="modules"
+          :pagination="true"
+        >
+          <swiper-slide
+            v-for="apt in getUser.apartments"
+            :key="apt._id"
+            @click.self="
+              $router.push({ name: 'ViewApartment', params: { id: data._id } })
+            "
+          >
+            <div
+              :style="{
+                backgroundImage: 'url(' + apt.fileUrl[0] + ')',
+              }"
+              style="background-repeat: no-repeat; background-size: cover"
+              class="w-full h-40 rounded-3xl flex w-full cover no-repeat items-end items-self-end self-end rounded-2xl p-3"
             >
-          </div>
+              <!-- <div
+              :style="{
+                backgroundImage: 'url(' + apt.fileUrl[0] + ')',
+              }"
+              class="w-1/2 h-full bg-cover rounded-3xl"
+            ></div> -->
+              <div
+                class="z-10 w-11/12 self-end p-2 h-full pl-5 flex flex-col items-center justify-end rounded-3xl"
+              >
+                <div class="grid grid-row mb-3 gap-1">
+                  <!-- <span class="text-white text-sm font-medium">
+                  Alexis Avenue</span
+                >
+                <span class="text-white text-xs font-medium"
+                  >278 Macathy street</span
+                > -->
+                  <span class="text-white text-base font-bold">{{
+                    formatAmount(apt.price)
+                  }}</span>
+                </div>
 
-          <div class="grid grid-row gap-1 mb-4">
-            <span class="text-white font-medium"> Yearly</span>
-            <span class="text-white text-xs font-medium"
-              >Due date: <span class="text-primary">48days</span></span
-            >
-          </div>
-          <button class="h-9 w-28 bg-primary rounded-2xl">
-            <p class="text-white text-sm font-medium">Pay Now</p>
-          </button>
-        </div>
+                <div class="grid grid-row gap-1 mb-4">
+                  <span class="text-white text-xs font-bold">
+                    {{ apt.paymentType }}</span
+                  >
+                  <span class="text-white text-xs font-bold"
+                    >Due date:
+                    <span class="text-white">{{
+                      formatDateString(apt.dueDate)
+                    }}</span></span
+                  >
+                </div>
+                <button
+                  @click="payNow(apt._id)"
+                  class="focus:outline-none h-9 w-28 bg-primary rounded-2xl"
+                >
+                  <p class="text-white text-sm font-medium">Pay Now</p>
+                </button>
+              </div>
+            </div>
+            <div class="slide"></div>
+          </swiper-slide>
+        </swiper>
       </div>
 
       <!-- Services -->
@@ -141,13 +181,16 @@
 
 <script setup>
 import img from "@/assets/img/profile.png";
-import house from "@/assets/img/house.jpg";
+// import house from "@/assets/img/house.jpg";
 import { Pagination } from "swiper";
 import { useDataStore } from "@/stores/data.js";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { computed, onMounted, ref } from "vue";
 import ScheduleDetails from "@/components/ScheduleDetails.vue";
+import { useToast } from "vue-toastification";
+
+import { helperFunctions } from "@/composable/HelperFunctions";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -161,7 +204,9 @@ import BackButton from "@/components/BackButton.vue";
 const store = useDataStore();
 // const router = useRouter();
 
-const { query } = store;
+const { query, mutate } = store;
+const { formatDateString, formatAmount } = helperFunctions;
+const toast = useToast();
 
 const slides = ref({});
 const modules = ref([Pagination]);
@@ -202,8 +247,55 @@ async function queryInspectionDetails() {
   }
 }
 
+async function payNow(id) {
+  try {
+    loading.value = true;
+
+    let res = await mutate({
+      endpoint: "MakePayment",
+      data: {
+        input: {
+          houseUnit: id,
+          purposeOfPayment: "RENT",
+        },
+      },
+      service: "GENERAL",
+    });
+    if (res) {
+      res.toLowerCase() == "payment initiated"
+        ? toast.success(res)
+        : toast.error(res);
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error(e.message);
+  } finally {
+    loading.value = false;
+  }
+}
+
 onMounted(async () => {
   await queryUser();
   await queryInspectionDetails();
 });
 </script>
+
+<style>
+.slide {
+  background: linear-gradient(
+    180deg,
+    rgba(217, 217, 217, 0) 28.55%,
+    rgba(18, 25, 37, 0.87) 76.2%
+  );
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)); */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* z-index: -1; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 20px;
+}
+</style>

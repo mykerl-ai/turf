@@ -45,6 +45,9 @@ import bookActive from "@/assets/icons/bookactive.svg";
 // import chat from "@/assets/icons/chat.svg";
 // import chatActive from "@/assets/icons/chatactive.svg";
 
+import bill from "@/assets/icons/bill.svg";
+import billActive from "@/assets/icons/bill-active.svg";
+
 import profile from "@/assets/icons/profile.svg";
 import profileActive from "@/assets/icons/profileactive.svg";
 
@@ -81,7 +84,14 @@ const tabs = reactive([
   //   icon: chat,
   //   activeICon: chatActive,
   // },
-
+  {
+    tab: "bill",
+    href: "/bill",
+    slug: "bill",
+    label: "bill",
+    icon: bill,
+    activeICon: billActive,
+  },
   {
     tab: "portal",
     href: "/portal",

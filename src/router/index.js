@@ -76,6 +76,18 @@ const routes = [
       },
 
       {
+        path: "/bill",
+        name: "BillPage",
+        component: () => import("@/views/BillPage.vue"),
+      },
+
+      {
+        path: "/bill/:id",
+        name: "BillPageDetails",
+        component: () => import("@/views/BillPageDetails.vue"),
+      },
+
+      {
         path: "/inspect/schedule",
         name: "Schedule",
         component: () => import("@/views/SchedulePage.vue"),

@@ -5,12 +5,17 @@ query FetchUser {
     username
     profileImage
     email
+    firstName
+    lastName
+    middleName
+    walletBalance
+    phone
     dob
     state
     address
+    apartments
     createdAt
     updatedAt
-    walletBalance
     paymentDetails {
       accountNumber
       accountName
@@ -18,9 +23,5 @@ query FetchUser {
       bankName
       slug
     }
-    middleName
-    lastName
-    firstName
-    phone
   }
 }
