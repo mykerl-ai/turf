@@ -53,7 +53,10 @@
       </div>
 
       <!-- second box  -->
-      <div class="mb-4">
+      <div
+        v-if="getUser && getUser.apartments && getUser.apartments.length"
+        class="mb-4"
+      >
         <swiper
           @swiper="setSwiperInstance"
           :slides-per-view="getUser.apartments.length > 1 ? 1.3 : 1"
@@ -65,13 +68,17 @@
             v-for="apt in getUser.apartments"
             :key="apt._id"
             @click.self="
-              $router.push({ name: 'ViewApartment', params: { id: data._id } })
+              $router.push({ name: 'ViewApartment', params: { id: apt._id } })
             "
           >
             <div
-              :style="{
-                backgroundImage: 'url(' + apt.fileUrl[0] + ')',
-              }"
+              :style="
+                apt && apt.fileUrl
+                  ? {
+                      backgroundImage: 'url(' + apt.fileUrl[0] + ')',
+                    }
+                  : undefined
+              "
               style="background-repeat: no-repeat; background-size: cover"
               class="w-full h-40 rounded-3xl flex w-full cover no-repeat items-end items-self-end self-end rounded-2xl p-3"
             >
