@@ -88,6 +88,12 @@ const routes = [
       },
 
       {
+        path: "/transaction/:id",
+        name: "TransactionDetails",
+        component: () => import("@/views/TransactionDetails.vue"),
+      },
+
+      {
         path: "/inspect/schedule",
         name: "Schedule",
         component: () => import("@/views/SchedulePage.vue"),

@@ -12,6 +12,7 @@ export const useDataStore = defineStore("main", {
     inspectionDetails: {},
     clientInspectionDetails: [],
     takenDates: [],
+    transactionHistory: [],
   }),
 
   getters: {
@@ -22,6 +23,7 @@ export const useDataStore = defineStore("main", {
     getInspectionDetails: (state) => state.inspectionDetails,
     getClientInspectionDetails: (state) => state.clientInspectionDetails,
     getTakenDates: (state) => state.takenDates,
+    getTransactionHistory: (state) => state.transactionHistory,
   },
 
   actions: {
