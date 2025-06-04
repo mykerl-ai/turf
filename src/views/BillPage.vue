@@ -185,8 +185,20 @@ async function queryTransactions() {
     console.log(e);
   }
 }
-
+async function queryUser() {
+  try {
+    await query({
+      endpoint: "FetchUser",
+      payload: {},
+      service: "GENERAL",
+      storeKey: "userData",
+    });
+  } catch (e) {
+    console.log(e);
+  } 
+}
 onMounted(async () => {
+  await queryUser()
   await queryTransactions();
 });
 </script>
