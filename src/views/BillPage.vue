@@ -16,15 +16,15 @@
       </div>
       <!-- <span
         class="text-white text-xs text-right tracking-widest font-medium self-end justify-self-end"
-        >{{ getUser.paymentDetails.accountName }}</span
+        >{{  getUser&& getUser.paymentDetails&& getUser.paymentDetails.accountName }}</span
       > -->
       <span
         class="text-white text-sm text-right tracking-widest font-bold self-end justify-self-end"
-        >{{ getUser.paymentDetails.accountNumber }}</span
+        >{{getUser&& getUser.paymentDetails&& getUser.paymentDetails.accountNumber }}</span
       >
       <span
         class="text-white text-xs text-right font-medium self-end justify-self-end"
-        >{{ getUser.paymentDetails.bankName }}</span
+        >{{getUser&& getUser.paymentDetails&& getUser.paymentDetails.bankName }}</span
       >
     </div>
     <ion-content class="ion-padding">
